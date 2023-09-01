@@ -106,7 +106,7 @@ public class PessoaDTO {
         pessoa.setParentesco(this.parentesco);
         pessoa.setIdusuario(this.idusuario);
 
-        pessoa.setEnderecos(this.enderecos);
+
 
         return pessoa;
 

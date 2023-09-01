@@ -36,9 +36,5 @@ public class EnderecoDTO {
 
     }
 
-    public Endereco ToEndereco(){
-
-        Endereco endereco = new Endereco();
-    }
 
 }
