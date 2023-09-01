@@ -1,0 +1,30 @@
+Roteiro para nossa aplicação ser executada via DOCKER.e Se já quiserem nos testes individuais de vocês ja deixar tudo configurado
+No final quando consolidar as branchs terá que ter isto Ok gerando o obritarioramente o passo 2.2 para ter . JAR correto com todos os ajustes.
+
+
+1) Copiar o arquivo Dockerfile em anexo na pasta raiz do nosso projeto.
+
+2) Tivemos que gerar o . JAR da nossa aplicação.
+
+2.1) Ir na pasta TARGET a partir da raiz do nosso projeto e executar no meu caso vou pelo terminal no proprio Intelij
+
+2.2) Executar mvn packge -DskipTests = true
+
+2.3) Se tudo correto com nossa aplicação (podemos ter problema na versão Java, fechamos de usar a 11 por ser a ultima LTS)
+
+2.4) no terminal voltar a pasta raiz do nosso projeto e executar docker build -t tech:2.0 ** irá criar a imagem no docker local
+
+2.5) bom com isto teremos criado nossa imagem docker, caso alguém queira se cadastrar e disponibilizar já pelo dockerhub, mas não é necessário
+
+3) Pode ser também na pasta raiz de nosso projeto, copiar os arquivos anexos: docker-compose.yml
+
+4) Criar 2 diretórios na pasta raiz do projeto ** mas pode ser outra ** sendo: scripts e data, o arquivo docker-compose.yml, deve estar na raiz destes 2 diretórios criados
+
+5) Copiar o arquivo .sql do anexo do email na pasta script.
+
+5) Ir pelo terminal ou prompt do SO , até o diretório que esta o arquivo docker-compose.yml e executar o comando: docker compose up -d
+ Com isto o banco irá subir, criando as tabelas caso não existam e startar a aplicação
+
+** não tem porque dar erros.... mas qq coisa analisamos.
+
+	
