@@ -125,6 +125,5 @@ public class PessoaDTO {
         entity.setParentesco(this.parentesco);
         entity.setIdusuario(this.idusuario);
 
-
     }
 }

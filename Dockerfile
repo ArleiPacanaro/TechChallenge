@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-alpine
+FROM adoptopenjdk/maven-openjdk11:latest
 ADD target/*.jar app.jar
 WORKDIR /app
 EXPOSE 80

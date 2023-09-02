@@ -18,10 +18,12 @@ public class PessoaService {
 
     private final IPessoaRepository pessoaRepository;
 
+
     @Autowired
     public PessoaService(IPessoaRepository pessoaRepository) {
         this.pessoaRepository = pessoaRepository;
     }
+
 
     @Transactional
     public PessoaDTO save(PessoaDTO dto) {
