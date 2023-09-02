@@ -6,176 +6,78 @@
 ![Portal de Consumo de Energia](https://github.com/rmstrunkis/tech_challenge/assets/105131830/c0e3a5f4-0e07-447e-896e-3e3f2dee760d)
 
 <h2><strong>Descrição do projeto</strong></h2>
-<p>Projeto Tech Challenge - FIAP Alura - 1º Fase</p>
+<p>Projeto Tech Challenge - FIAP Alura - 2º Fase</p>
 <p>APIs que serão disponibilizadas para um portal que irá demonstrar ao usuário o consumo de energia de seus eletrodomésticos.</p>
 
-<p>Construimos nesta fase do projeto 3 APIS:</p>
 <p> * Endereços</p>
 <p> * Pessoas</p>
 <p> * Eletrodomésticos</p>
 
-<p>Neste momento as APIs terão a responsabilidade de cadastrar as informações de Endereços, Pessoas e Eletrodomésticos.</p>
+<p>Neste momento as APIs irão fornecer todos os métodos de um CRUD, Relacionamentos entre si, Filtros diversos de pesquisas sobre os dados de Endereços, Pessoas e Eletrodomésticos.</p>
+
+
+<p> Após construimos na 1º Fase do projeto 3 APIs apenas com ações do método\verbo POST, sendo que 2 estavam persistindo em  banco de memória H2 e uma em collection do tipo SET, nesta 2º Fase estamos agora persistindo em um banco de dados relacional confiável, criamos em todas as APIs os demais métodos que compõe um CRUD (GET,POST,UPDATE,DELETE), relacionamentos entre as entidades utlizando a framework do JPA e o ambiente de execução com Docker, para estes temas adicionais acrescentamos em nosso README os capitulos\tópicos abaixo com os detalhes do que utilizamos, motivações e dificuldades :</p>
+
+<p> * Banco de Dados</p>
+<p> * JPA</p>
+<p> * Docker</p>
+
 
 
 <h2><strong>Funcionalidades e Demonstração da Aplicação - 2º Item do Entregável</strong></h2>
+<p></p>
+<p>Baixar via GIT : git clone https://github.com/rmstrunkis/techchallenge.git</p> 
+<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: mvn compile.</p> 
+<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar:  <b>docker build -t tech:2.0 . </b> e depois : docker compose up -d</p> 
+<p>Premisa: Docker instalado na máquina.</p> 
+<p></p>
+
+<h3><strong>API Usuários</strong></h3>
+<p></p>
+<p>Funcionalidades: CRUD de Usuários</p>
+<p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
+<p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
+<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/usuario-controller/ </p>
+<p>URL Local:http://localhost:8080/usuarios</p>
+<p></p>
+
 <h3><strong>API Pessoas</strong></h3>
 <p></p>
-<p>Funcionalidade : Cadastro de Pessoas relacionadas ao usuário</p>
-<p>Baixar via GIT : git clone https://github.com/rmstrunkis/tech_challenge.git </p> 
-<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: mvn compile.</p> 
-<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: mvn spring-boot:run.</p> 
-<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/pessoa-controller/criarNovaPessoaUsingPOST </p>
-<p>Utilizamos nesta fase apenas o método (verbo): POST</p>
+<p>Funcionalidades: CRUD de Pessoas relacionadas ao usuário</p>
+<p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
+<p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
+<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/pessoa-controller/</p>
 <p>URL Local:http://localhost:8080/pessoas</p>
+<p></p>
+
+<h3><strong>API Endereços</strong></h3>
+<p></p>
+<p>Funcionalidades: CRUD de Endereços relacionados aos usuários</p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
-<p>Body da Requisição: Formato JSON, exemplo abaixo e no swagger</p>
-<p></p>
-<p>JSON de Exemplo de Entrada:</p>
-<p> Observação: O Campo de IdUsuario abstraímos neste momento que iremos receber da aplicação que irá consumir o cadastro de pessoas informando a qual usuário as pessoas estarão reclacionadas.</p>
-<p></p>
-<pre>{
-   "idUsuario": "1",
-   "cpf":"49397364073" ,
-   "nome": "Zezinho",
-   "nomePai": "Ze",
-   "nomeMae": "Zinha",
-   "telefone": "11 32585303",
-   "senha": "123",
-   "dataNascimento": "01/07/1977",
-   "email": "arlei_lepiani@hotmail.com",
-   "parentesco": "FILHOS",
-   "sexo":"MASCULINO"
-}</pre>
-<p></p>
-<p>Retorno:</p>
-<p> O Campo de Id será gerado de forma automática a cada novo cadastro, porém não permitimos que um mesmo CPF seja relacionado mais de uma vez ao mesmo usuário, mas permitimos em outro usuário, assumindo que nesta fase uma mesma pessoa pode estar relacionada a N usuários</p>
-<p> Ocorrendo o cadastro do usuário receberemos o HTTP STATUS 201 - CREATED, caso não seja criado o usuário por algum erro no preecnhimento do JSON será retornado o Status HTTP 401 com a mensagem do(s) campo(s) que foram preenchidos de forma errada ou que a pessoa ja esta relacionada ao usuário</p>
-<p>Sucesso na Criação:</p>
-<p></p>
-   <p>Pessoa cadastrada com ID:-4427849907557628080
-<p></p>
-<p>Falha na Criação por erro em preenchimento de campo, informando o(s) campo(s) validados e a mensagem da regra utilizada:</p>
-<p>{</p>
-   <p>"cpf": "CPF deve ser válido"
-<p>}</p>
-<p>Falha na Criação por duplicidade:</p>
-<p></p>
-   <p>"Pessoa ja cadastrada, com o ID:-4427849907557628080 para o usuário: 2
-<p></p>
-<h3>API Enderecos</h3>
-<p>Funcionalidade : Cadastro de Enderecos</p>
-
-<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: mvn spring-boot:run.</p>
-
-<p>Utilizamos nesta fase apenas o método (verbo): POST</p>
-
+<p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
 <p>URL Local:http://localhost:8080/enderecos</p>
+<p>Swagger da aplicação: http://localhost:8080/swagger-ui/#/endereco-controller/</p>
 
-<p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
+<p></p>
 
-<p>Body da Requisição: Formato JSON, exemplo abaixo:</p>
-
-<p>JSON de Exemplo de Entrada:</p>
-
-<pre>
-{
-   "rua": "rua da liberdade",
-   "numero":"1625" ,
-   "cep": "60000100",
-   "bairro": "Dos sonhos",
-   "cidade": "Iluminda",
-   "estado": "Amazonas"
-    
-}
-</pre>
-
-<p>Retorno:</p>
-
-<p>O Campo de Id será gerado de forma automática a cada novo cadastro.</p>
-
-<p>Ocorrendo o cadastro do endereço receberemos o HTTP STATUS 201 - CREATED, caso não seja criado o endereço por algum erro no preecnhimento do JSON será retornado o Status HTTP 401 com a mensagem do(s) campo(s) que foram preenchidos de forma errada.</p>
-
-<p>Sucesso na Criação do Endereço</p>
-
-<pre>
-{
-   "id": "1",
-   "rua": "rua da liberdade",
-   "numero":"1625" ,
-   "cep": "60000100",
-   "bairro": "Dos sonhos",
-   "cidade": "Iluminda",
-   "estado": "Amazonas"
-    
-}
-</pre>
- 
-<p>Falha na Criação por erro em preenchimento de campo, informando o(s) campo(s) validados e a mensagem da regra utilizada:</p>
-
-<pre>
-{
-    "rua": "O nome da rua nao pode ser vazio ou nulo."
-}
-</pre>
 <h3>API Eletrodomesticos</h3>
-<p>Funcionalidade : Cadastro de Eletrodomesticos</p>
-
-<p>Baixar via GIT : git clone https://github.com/rmstrunkis/tech_challenge.git</p>
-
-<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: mvn spring-boot:run.</p>
-
-<p>Utilizamos nesta fase apenas o método (verbo): POST</p>
-
-<p>URL Local:http://localhost:8080/eletrodomestico</p>
-
+<p></p>
+<p>Funcionalidade : CRUD de Eletrodomesticos relacionados aos endereços</p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
+<p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
+<p>URL Local:http://localhost:8080/eletrodomestico</p>
+<p>Swagger da aplicação: http://localhost:8080/swagger-ui/#/eletrodomestico-controller/</p>]
 
-<p>Body da Requisição: Formato JSON, exemplo abaixo:</p>
-
-<pre>
-{
-   "nome": "Microondas",
-   "modelo":"LG" ,
-   "potencia": "900w",
-   "serialNumber": "GN20142B530"
-   
-}
-</pre>
-
-<p>Retorno:</p>
-
-<p>O Campo de Id será gerado de forma automática a cada novo cadastro.</p>
-
-<p>Ocorrendo o cadastro do eletrodomestico receberemos o HTTP STATUS 201 - CREATED, caso não seja criado o eletrodomestico por algum erro no preecnhimento do JSON será retornado o Status HTTP 401 com a mensagem do(s) campo(s) que foram preenchidos de forma errada.</p>
-
-<p>Sucesso na Criação do Eletrodomestico</p>
-
-<pre>
-{  
-   
-   "id": "1",
-   "nome": "Microondas",
-   "modelo":"LG" ,
-   "potencia": "900w",
-   "serialNumber": "GN20142B530"
-   
-} 
-</pre>
-
-<p>Falha na Criação por erro em preenchimento de campo, informando o(s) campo(s) validados e a mensagem da regra utilizada:</p>
-
-<pre>
-{
-    "nome": "O nome do eletrodomestico nao pode ser vazio ou nulo."
-}
-</pre>
-
+<p></p>
 <h2><strong>Tecnologias Utilizadas</strong></h2>
+
+<p></p>
 <p>Liguagem: Java versão 11</p>
-<p>Padrão de Modelagem do Sistema: DDD (Driven Domin Design)</p>
+
 <p>Arquitetura: MVC - Model View Controller</p>
-<p>Frameworks e Bibliotecas: Spring Boot versão: 2.7.12 , LOMBOK versão default para a versão do Spring, Bean Validation versão default para a versão do Spring</p>
-<p>Ferramentas Colaborativas: Postman,GIT,Maven e Swagger</p>
+<p>Frameworks e Bibliotecas: Spring Boot versão: 2.7.12 , LOMBOK versão default para a versão do Spring, Bean Validation versão default para a versão do Spring, JPA</p>
+<p>Ferramentas Colaborativas: Docker,Postman,GIT,Maven e Swagger</p>
+<p>Banco de Dados: POSTGRES </p>
 <p></p>
 
 
@@ -250,7 +152,7 @@
 <p>Quando optamos por usar o Maven em nosso projeto, além de gerenciar as dependências e o build, ele também como foi mencionado aplica conceito de programação por convenção (Estrutura de diretórios por padrão) e facilita a vida do desenvolvoder padronizando também os projetos,seguindo no padrão do arquétipo Spring Boot teremos as principais estruturas listadas abaixo (o que foi abordado até fase atual do curso): </p>
 <p></p>
 <p><b>src/main/java -</b>    Diretório onde está o(s) código(s) fonte(s) Java da Aplicação e/ou Biblioteca(s)</p>
-<p><b>src/main/resources -</b> Arquivos de configuração e outros arquivos devem ficar nesta pasta, como o application property (que veremos nas próximas fases do curso, especialmente na configuração com banco de dados)</p>
+<p><b>src/main/resources -</b> Arquivos de configuração e outros arquivos devem ficar nesta pasta, como o application property (utilziada na configuração de acesso aos bancos de dados)</p>
 <p><b>src/test/java -</b> Pasta que contém os arquivos de testes unitários</p>
 <p><b>src/test/resources -</b> Pasta com arquivos que serão utilizados pelas classes de testes unitários</p>
 <p><b>target -</b> As classes javas compiladas do nosso projeto</p>
@@ -293,13 +195,9 @@
 <p></p>
 <p></p>
 <p>Seguem as dependências que também adicionamos durante a utilização da ferramenta Spring Initializer, lembrando que como explicado anteriormente, caso nossas dependências possuam outras dependências o Maven já faz todo este gerenciamento</p>
-<p> Outro aspecto interessante é que na configuração de nosso projeto nesta fase optamos inicialmente em utilizar 4 dependências: Spring MVC (Que ja traz todas as dependências necessárias para um API Rest - Web Stand Alone ), Validation (para utilizarmos o Validation Bean), Lombok (reutilização de códigos comuns) e Swagger(Documentação) </p>        
+<p> Outro aspecto interessante é que na configuração de nosso projeto na 1º fase optamos inicialmente em utilizar 4 dependências: Spring MVC (Que ja traz todas as dependências necessárias para um API Rest - Web Stand Alone ), Validation (para utilizarmos o Validation Bean), Lombok (reutilização de códigos comuns) e Swagger(Documentação), porém nesta 2º fase para trabalharmos efetivamente com um banco de dados e a framework mais adequada para isto, acrescentamos a depedência do JPA. </p>        
 <p></p>
 			
-	   
-
-		
-  
    	<dependencies>
                 <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -339,13 +237,19 @@
 			<p><version>3.0.0</version></p>
 		<p></dependency></p>
 
+                 <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
 	</dependencies>
+
  <p></p>
+
+	
 <p>Também temos as configurações de Plugin para o Build:</p>
  <p></p>
-
-		
-
+	
                 <build>
 		<plugins>
 			<plugin>
@@ -370,11 +274,11 @@
 <p>Startar uma aplicação: mvn spring-boot:run</p>
 
 <p></p>
-<h3><strong>Separação de Camadas, Padrões de Projeto, Anotações, Classes  e DDD</strong></h3>
+<h3><strong>Separação de Camadas, Padrões de Projeto, Principais: Anotações e Classes </strong></h3>
 <p></p>
 <p>Em nosso projeto, pensando na separação de responsabilidades, melhores práticas e na arquitetura MVC, criamos os pacotes\pastas (algumas padrões do Maven para o arquétipo escolhido) abaixo em negrito: </p> 
 
-<p><b>Pasta: Controller:</b>  Contêm as classes PessoaController,EnderecoController e EletrodomesticoController que serão as responsáveis por atender as requisições da camada View e direcionar as ações para as classes de Negócio, nesta camada que é o C - Controller da arquitetura MVC, estamos fazendo a injeção de dependência da nossa classe de Serviço que esta no pacote Service, na classe da Controller temos a exposição dos serviços disponiveis no servidor com base no verbos HTTP, nesta fase projeto estamos apenas expondo serviço com chamada via metódo POST</p> 
+<p><b>Pasta: Controller:</b>  Contêm as classes PessoaController,EnderecoController e EletrodomesticoController que serão as responsáveis por atender as requisições da camada View e direcionar as ações para as classes de Negócio, nesta camada que é o C - Controller da arquitetura MVC, estamos fazendo a injeção de dependência da nossa classe de Serviço que esta no pacote Service, na classe da Controller temos a exposição dos serviços disponiveis no servidor com base no verbos HTTP, na fase 1 deste projeto estamos apenas expondo serviço com chamada via metódo POST, um pouco mais abaixo expomos novas necessidades da utilização de outras anotações e classes com a evolução das fases.</p> 
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p>Anotação @RestController: anotação no nível de classe que indica que  esta é camada de controller do tipo Rest com dados no padrão JSON.</p>
 <p>Anotação @RequestMapping: anotação no nível de classe\ atributo que irá indicar a URL principal da API que no nosso casos teremos: Pessoa, Eletrodomestico e Endereço.</p>
@@ -383,6 +287,17 @@
 <p>Anotação @RequestBody: anotação no nível de parâmetros dos métodos que indica que o valor do objeto virá do corpo da requisição, em nosso projeto usamos como parâmetro de entrada para o método que estamos vinculando ao verbo POST da requisição</p>
 <p>Classe ResponseEntity: representa toda a resposta HTTP: código de status, cabeçalhos e corpo, em nosso projeto estamos utilizando no retorno do método que estamos vinculado ao método POST mas poderia na ser resposta de qualquer outro tipo de requisição</p>
 <p></p>
+<p>Nesta 2º Fase com as necessidades de termos um CRUD completo, acrescetamos mais algumas anotações e classes, explicados logo abaixo:</p>
+<p></p>
+<p>@GetMapping:anotação no nível de método que indica qual método irá executar a chamada de uma requisição do verbo GET, aqui podemos acrecentar um atributo que irá recuperar o(s) parametro(s) ou variaveis para uma chamada que necessite de uma pesquisa mais especifica, recuperadas através das anotações: @PathVariable entendemos a forma mais adequada para a semantica do padrão Rest ou através  @RequestParam que viria como QueryString e no casos mais indicada para tratarmos com o solicitante quer paginar uma resposta com muitos registros</p>
+<p>@PutMapping:anotação no nível de método que indica qual método irá executar a chamada de uma requisição do verbo PUT, recebendo normalmente a variável que sofrerá alteração, conforme explicado no verbo GET.</p>
+<p>@DeleteMapping:anotação no nível de método que indica qual método irá executar a chamada de uma requisição do verbo DELETE, recebendo normalmente a variável que sofrerá aa exclusão, conforme explicado no verbo GET.</p>
+<p>@RequestParam:anotação no nível de parametro,  podemos ter vários parametros passados por url mas que não são parte da url em sí, conceito da QueryString, podemos também definir se o parametro é obrigatório ou não.</p>
+<p>@PathVariable:anotação no nível de parametro, é utilizada quando o valor da variável é passada diretamente na URL, mas não como um parametro que você passa após o sinal de interrogação (?) mas sim quando o valor faz parte da url.</p>
+<p>Classe PageRequest: Classe que define os atributos para paginação dentro de um Objeto Page</p>
+<p>Classe Page: é uma sublista de uma lista de objetos. Permite obter informações sobre a posição do mesmo na lista inteira que o contém, usamos para termos um interface adequada com o front end</p>
+
+ 
 
 <p><b>Pasta: Config:</b>Criamos esta package como boa prática para termos as classes de infra-estrutura da nossa aplicação bem identificadas, nesta fase do projeto, estamos utilizando duas:</p>
 <p>ValidatorBean:   Esta classe possui apenas um método com a anotação @Bean que retorna uma factory (padrão de software) de Bean Validations para que possamos, validar os dados das requisições.</p>
@@ -393,7 +308,7 @@
 <p>Anotação @Bean: Essa anotação é no nível do Método e indica que esse cria e retorna um “bean” que pode ser usado como dependência em outras classes.</p>
 <p>Classe Validation: Classe que possui diversos métodos estáticos, sendo que usamos um deles no projeto para o retorno de Validators que iremos utilizar para a valdiação de nossos objetos do tipo DTO, centralizando assim na entrada dos dados as regras de validações antes do processamento e persistência.</p>
 <p>Sobre o Swagger nesta fase do projeto não iremos detalhar ainda.</p>
-<p><b>Pasta: DTO</b></p> 
+<p><b>Pasta: Domain - DTO</b></p> 
 <p>Nesta pasta temos as classes que irão representar as Entidades que irão ser utilizadas nas interações entra a camada View e Controller, tendo apenas esta responsabilidade de trafegar os dados (Seguindo o que é conhecido como padrão de software DTO) e aqui podemos falar que aplicamos a 1º especificação do SOLID (Single Responsability Principle (Princípio da Responsabilidade Única); Open/Closed Principle (Princípio do “Aberto para Extensão/Fechado para Implementação); Liskov Substitution Principle (Princípio da Substituição de Liskov)), estas classes são muito similares as classes de entidade do negócio nos atributos, mas aqui podemos tirar alguns atributos que não devem ser expostos por questões de segurança, aplicamos as validações e no nosso caso utilizando as anotações do bean validation</p>
 <p> Para realizar o mapeamento dos atributos das classes DTO e das classes de Dominio que estão na nossa pasta MODEL, podemos utilizar diversas Classes, dentre elas a mais recomendada pela questão de performance e com o JMapper mas em nosso projeto pela simplicidade, criamos uma método na classe de DTO que retorna um objeto da nossa classe de Dominio\Negócio (Padrão de software Creator)</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
@@ -406,19 +321,36 @@
 <p>Anotação @NotNull: anotação no nível de atributo do bean validation que valida se o campo esta nulo, cuidado na utilização em conjunto com a anotação @NotBlank, que irá apresentar uma exceção</p>
 <p></p>
 <p></p>
-<p><b>Pasta: MODEL</b></p> 
-<p>Nesta pasta temos as classes que irão representar as Classes e Entidades de negócio, dentro da arquitetura MVC estamos falando que faz parte do  M-Model, que dentro dos sistemas corporativos deveria ser a camada mais importante e que não deveria ter implementações de classes relacionadas a infra-estrutura, seguindo os conceitos de DDD (Domain Divre Design) devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como Pessoa, PessoaSexo, Endereco e etc</p>
+<p><b>Pasta: Domain-Entitie</b></p> 
+<p>Nesta pasta temos as classes que irão representar as Classes e Entidades de negócio, dentro da arquitetura MVC estamos falando que faz parte do  M-Model, que dentro dos sistemas corporativos deveria ser a camada mais importante e que não deveria ter implementações de classes relacionadas a infra-estrutura, seguindo os conceitos inciais que estamos apredendo de DDD (Domain Divre Design) devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como Pessoa, PessoaSexo, Endereco e etc</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p>Anotação @Getter: Iremos falar sobre o Lombok que é a blblioteca que nos fornece esta anotação, em um capítulo mais abaixo, mas a priori esta anotação implementa os métodos Getters (Encapsulamento OO) , podemos usar esta anotação na classe ou nos atributos.</p>
 <p>Anotação @AllArgsConstructor: Iremos falar sobre o Lombok que é a blblioteca que nos fornece esta anotação, em um capítulo mais abaixo, mas a priori esta anotação implementa um construtor com todos os atributos da classe, podemos usar esta anotação no nível da classe.</p>
 <p>Anotação @EqualsAndHashCode: Iremos falar sobre o Lombok que é a biblioteca que nos fornece esta anotação, em um capítulo mais abaixo, mas a priori esta anotação implementa os métodos equals e hashcode sobrescritos de Object (podemos definir quais atributos devem ou não ser utilizados, através de parâmetros), podemos usar esta anotação no nível da classe</p>
 <p></p>
+<p>Nesta 2º Fase com as necessidades de termos um CRUD completo e em especial a persistência a camada de dados, acrescentamos mais algumas anotações e classes, explicados logo abaixo de forma sucinta, pois temos um novo tópico mais especifico sobre JPA\Hibernate:</p>
+<p></p>
+<p>@Entity: anotação a nível de classe, utilizamos para declarar que a classe é uma entidade. A partir disso o JPA estabelecerá a ligação entre a entidade e uma tabela de mesmo nome no banco de dados, onde os dados de objetos desse tipo poderão ser persistidos</p>
+<p>@Table: anotação a nível de classe, podemos especificar detalhes em seus 4 tipos de atributos (nome, sobrescrever seu catálogo, seu esquema e assegurar restrições de unicidade nas colunas) da tabela que serão utilizados para persistir as nossas entidades na base de dados. Caso essa anotação seja omitida, não teremos um erro como resultado, porém será utilizado o nome da classe como valor default. Dessa forma, apenas definimos a anotação se quisermos sobrescrever algo do foi mencionado na parametrização de seus atributos.</p>
+<p>@Column: anotação a nível de atributo, podemosespecificar os detalhes da coluna que um campo ou propriedade, alguns detalhes são relacionados com o esquema e, portanto aplicados apenas quando um esquema for gerado. A anotação @Column é opcional, possuindo valores default já configurados. </p>
+<p>@GeneratedValue: anotação a nível de atributo  utilizada para indicar que a geração do valor do identificador único da entidade será gerenciada pelo provedor de persistência. Essa anotação deve ser adicionada logo após a anotação @Id. Quando não anotamos o campo com essa opção, significa que a responsabilidade de gerar e gerenciar as chaves primárias será da nossa aplicação</p>
+<p>@Id: anotação a nível de atributo  utilizada para indicar que será a chave primária de nossa entidade</p>
+<p>@OneToOne: anotação a nível de atributo, que define uma associação com outra entidade que tenha a multiplicidade de um-para-um</p>
+<p>@OneToMany: anotação a nível de atributo, que define uma associação com outra entidade que tenha a multiplicidade  um-para-muitos</p>
+<p>@ManyToOne:anotação a nível de atributo, que define uma associação com outra entidade que tenha a multiplicidade de muitos-para-um</p> 
+<p>@ManyToMany:anotação a nível de atributo, que define uma associação com outra entidade que tenha a multiplicidade de muitos-para-muitos</p> 
+<p>@JoinColumn: anotação a nível de atributo: é usado para especificar o mapeamento de uma coluna de chave estrangeira em um relacionamento entre duas entidades. A anotação @JoinColumn é aplicada no lado proprietário da associação para definir o nome da coluna de chave estrangeira e outros atributos relacionados à coluna de junção.</p> 
+<p>@JoinTable: anotação a nível de atributo, usada para mapear uma relação ManyToMany entre duas entidades</p> 
+<p>@Transactional: anotação a nível de classe, criar uma transação na persistencia de nosso dados para evitar erros de constraints</p> 
+
+
 <p></p>
 <p><b>Pasta: Respository</b></p> 
-<p>Nesta pasta temos as classes que irão representar as Classes de persistências e relacionamento com o banco de dados, dentro da arquitetura MVC estamos indicando que pertence ao M-Model também,  seguindo os conceitos de DDD  devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como PessoaRepository, Métodos : Salvar, Buscar e etc. Nesta fase do projeto ainda não estamos usando JPA e mesmo banco de dados não estava obrigatório, mas em algumas APIS deste projeto persistimos em banco H2 e em outras seguimos a persistência em Collections do tipo Set.</p>
+<p>Nesta pasta temos as classes que irão representar as Classes de persistências e relacionamento com o banco de dados, dentro da arquitetura MVC estamos indicando que pertence ao M-Model também,  seguindo os conceitos de DDD  devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como PessoaRepository, Métodos : Salvar, Buscar e etc. Na fase 1 do projeto ainda não usamos JPA e mesmo banco de dados não estava obrigatório, mas em algumas APIS deste projeto já estavmos persistindo em banco H2 e em outras seguimos a persistência em Collections do tipo Set. Porém após a fase 1 começamos a persistir os dados em um banco de dados confiável e um pouco mais abaixo, estamos expondo a utilização de uma nova classe.</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p></p>
-<p>Anotação @Repository: Indica que uma classe anotada é um Repositório, originalmente definido por DDD como  um mecanismo para encapsular armazenamento, recuperação e comportamento de pesquisa que representa uma coleção de objetos, com base nesta anotação e seguindo o objetivo de evitarmos acomplamento pela injeção de dependências e inversão de controle, injetamos estas classes nas classes da pasta Service.</p>
+<p>Anotação @Repository: Indica que uma classe\interface anotada é um Repositório, originalmente definido por DDD como  um mecanismo para encapsular armazenamento, recuperação e comportamento de pesquisa que representa uma coleção de objetos, com base nesta anotação e seguindo o objetivo de evitarmos acomplamento pela injeção de dependências e inversão de controle, injetamos estas classes nas classes da pasta Service.</p>
+<p>JPARespository: módulo  que contém uma camada de Repositórios (JpaRepository) que dá suporte à criação de repositórios estendendo interfaces do Spring Data. A infraestrutura é compartilhada pelos bancos e o JPA Provider que implementa o JPA, aonde ja temos implementados diversos metodos como por exemplo de Crud que recebem um Generic da Entidade que queremos persistir.</p>
 <p></p>
 <p></p>
 <p><b>Pasta: Service:</b> Pasta com as classes de serviço que contêm as regras de negócios comuns e são responsáveis em delegar para as classes de Negócios as requisições da Controller, em nosso projeto ela é injetada na Controller e recebe a injeção das classes de negócio.</p> 
@@ -428,8 +360,6 @@
 <p>Anotação @Autowired: Que fará a injeção de dependência da classe Repositório e da Config - Bean validation, usamos a injenção de dependência para evitarmos o Acoplamento.</p>
 
  
-
-
 <p></p>
 <h3><strong>LOMBOK</strong></h3>
 <p></p>
@@ -477,11 +407,190 @@ negativo incluindo o 0; pode ser utilizado em variáveis numéricas.</p>
 somente no passado ou no passado e no presente.</p>
 <p>@Future e @FutureOrPresent: valida se o valor do campo de tipo de data
 está somente no futuro ou no futuro ou no presente.</p>
+<p></p>
+<h3><strong>Banco de Dados</strong></h3>
+<p></p>
+<p>O nosso projeto a partir da 2º Fase apresentou a necessidade de persistirmos os dados em um banco de dados confiável, com isto fomos pesquisar através dos requisitos:</p>
+<p>* Armazenamento de Objeto
+<p>* Possibilidade de implementação de comportamento no banco de dados</p>
+<p>* Controle de concorrência</p>
+<p>* Controle de Transação</p>
+<p>* Aplicar integridade referencial</p>
+<p>* Open Source</p>
+<p></p>
+<p>Qual seria um SGDB adequado para nosso projeto e optamos pelo POSTGRES que possui todas as caracteristicas mencionadas e pelo site do DockerHub também vimos a versão com menos vulnerabildiades e estável e decidimos pela 9.4</p>
+<p></p>
+<p> Com base nos requisitos apresentados e na modelagem do comportamento dos registros em anexo ([Tabelas_atualizadas.xlsx](https://github.com/rmstrunkis/techchallenge/files/12446765/Tabelas_atualizadas.xlsx)), começamos a estruturar nossas tabelas com os comandos DDL (Data Definition Language) abaixo:</p>
+<p>Adicionamos comentários no bloco para explicarmos as motivações que nos indicaram a utilização de alguns comandos</p>
+<p></p>
+<pre>
+	
+ --- Comentário: Tabela que irá representar os usuários do sistema e que conterá as pessoas
+ --- São comanddos DDL e em nosso caso, como a criação das tabelas ocorrerá de forma automática através de um docker-compose (tema - 
+ --- que temos um tópico abaixo com mais detalhes), realizamos uma verificação se a tabela existe e apenas criamos senão existirem - 
+ --- no banco de dados	, o tipo SERIAL indica que será autoincrementado valor do campo do tipo INT, a palavra PRIMARY KEY indica a 
+ --- coluna que será a chave primária e pode haver composição, NOT NULL siginifa que o campo não aceitará valores NULOS, ocasionando 
+ --- uma exceção 
+	
+ CREATE TABLE IF NOT exists tb_usuario(
+	id SERIAL PRIMARY KEY,
+	username VARCHAR(255) NOT NULL,
+	senha VARCHAR(255) NOT NULL);
+
+--- Comentário: Tabela que irá representar as pessoas do sistema e que possui uma relação de N para 1 com a tabela de usuários, por ---- isso da informação das palavras FOREIGN KEY  e REFERENCES quem indicam qual a tabela que ela irá relacionar e uma dependência
+--- mesmo, já que poderemos ter apenas pessoas com usuários que já existam no banco de dados.
+--- Também temos a informação que caso o registro na tabela Pai seja exlcuido o mesmo deverá ocorrer na tabela filha com o comando  ----- CASCADE ON DELETE, sem a necessidade da aplicação gestionar, isto é um ponto muito importate de sempre avaliarmos em qualquer ------ sistema que formos trabalhar.
+
+CREATE table IF NOT exists  tb_pessoa(
+        id 		SERIAL       PRIMARY KEY,
+        cpf	 	 VARCHAR(14)  NOT NULL,
+   	nome	 	 VARCHAR(255) NOT NULL,
+   	telefone 	 VARCHAR(30) ,
+   	email 	         VARCHAR(30)  NOT NULL,
+   	senha 	         VARCHAR(255) NOT NULL,
+   	dataNascimento    DATE       NOT NULL,
+   	sexo 		  VARCHAR(9)  NOT NULL,
+   	parentesco        VARCHAR(30)  NOT null,
+   	idUsuario         BIGINT       NOT null,
+   	FOREIGN KEY (idUsuario) REFERENCES tb_usuario (id) ON DELETE CASCADE
+);
+
+-- Comentário: Tabela que irá representar endereços do sistema e que possui uma relação de N para N com a tabela de usuários
+CREATE TABLE IF NOT exists  tb_endereco
+(
+    	id 	     SERIAL       PRIMARY KEY,
+    	pais	     VARCHAR(255)  NOT NULL,
+   	estado	     CHAR(2)       NOT NULL,
+   	municipio     VARCHAR(255),
+   	bairro 	     VARCHAR(255)  NOT NULL,
+   	cep 	     VARCHAR(30)   NOT NULL,
+   	complemento   VARCHAR(30),
+        rua 	     VARCHAR(255)  NOT NULL
+);
 
 
+
+-- Comentário: Tabela que irá representar o relacionamento e muitos para muitos entre e usuários, na aplicação usamos a anotação -- --- @ManyToMany, neste caso o ideal é termos tabela que será criada de forma atuomatica no POST de endereço para auxiliar nesta -- ----- relação, caso ou Endereço ou Pessoa for excluido , a exclusão nesta tabela também será automática, conforme ja mencionamos sobre --- o DELETE ON CASCADE
+
+CREATE TABLE IF NOT exists  tb_pessoa_endereco
+(
+       idPessoa     SERIAL NOT NULL,
+	idEndereco   SERIAL NOT NULL,
+	PRIMARY KEY (idPessoa, idEndereco),
+	FOREIGN KEY (idPessoa) REFERENCES tb_pessoa (id) ON DELETE CASCADE,
+	FOREIGN KEY (idEndereco) REFERENCES tb_endereco (id) ON DELETE CASCADE
+ 
+);
+
+-- Comentário: Tabela que irá representar os eletrodomésticos de uma casa sendo N para 1 com o endereço (@ManyToOne) e que será ------- excluida de forma automática, caso o endereço seja excluído
+CREATE TABLE IF NOT exists  tb_eletrodomestico
+(
+      id 		 	         SERIAL       PRIMARY KEY,
+        nome	 	         VARCHAR(255) NOT NULL,
+   	potencia 	 		 INTEGER ,
+   	serialNumber 	     VARCHAR(30)  NOT NULL,
+   	idEndereco   		 SERIAL 	  NOT null unique ,
+    FOREIGN KEY (idEndereco) REFERENCES tb_endereco (id) ON DELETE CASCADE
+);
+</pre>
+
+<p></p>
+
+<h3><strong>JPA\Hibernate</strong></h3>
+<p></p>
+
+<p>A Java Persistence API (JPA) é uma especificação que possue 3 implentações de framework que foram desenvolvida com o conceito de POJO (Plain Old Java Object ou Velho e Simples Objeto Java) para persistir os objetos Java. Em nosso caso usamos a implementação da Hibernate por ser a mais difundida.</p>
+<p></p>
+<p>Existem diversas anotações e propriedades no JPA, em nosso projeto com as necessidades que foram aparecendo, tivemos que usar as anotações\classes abaixo:</p>
+<p></p>
+<p>* @Entity: anotação a nível de classe, utilizamos para declarar que uma classe é uma entidade. A partir disso o JPA estabelecerá a ligação entre a entidade e uma tabela de mesmo nome no banco de dados, onde os dados de objetos desse tipo poderão ser persistidos</p>
+<p></p>
+<p>* @Table: anotação a nível de classe, podemos especificar detalhes em seus 4 tipos de atributos (nome, sobrescrever seu catálogo, seu esquema e assegurar restrições de unicidade nas colunas) da tabela que serão utilizados para persistir as nossas entidades na base de dados. Caso essa anotação seja omitida, não teremos um erro como resultado, porém será utilizado o nome da classe como valor default. Dessa forma, apenas definimos a anotação se quisermos sobrescrever algo do foi mencionado na parametrização de seus atributos.</p>
+<p>* @Column: anotação a nível de atributo, podemos especificar os detalhes da coluna que um campo ou propriedade, alguns detalhes são relacionados com o esquema e, portanto aplicados apenas quando um esquema for gerado. A anotação @Column é opcional, possuindo valores default já configurados. </p>
+<p>* @GeneratedValue: anotação a nível de atributo  utilizada para indicar que a geração do valor do identificador único da entidade será gerenciada pelo provedor de persistência. Essa anotação deve ser adicionada logo após a anotação @Id. Quando não anotamos o campo com essa opção, significa que a responsabilidade de gerar e gerenciar as chaves primárias será da nossa aplicação, um dos seus atributos indica a estratégia de como será gerada o idendificador e a mais comum é de auto-incremento.</p>
+<p>* @Id: anotação a nível de atributo  utilizada para indicar que será a chave primária de nossa entidade</p>
+<p>* @OneToOne: anotação a nível de atributo, que define uma associação\relacionamento com outra entidade que tenha a multiplicidade de um-para-um, normalmente em um relacionamento unidirecional apenas usamos a anotação na classe PAI, por isso é sempre importante esta avaliação do direcionamento da relação.</p>
+<p>* @OneToMany: anotação a nível de atributo, que define uma associação\relacionamento com outra entidade que tenha a multiplicidade  um-para-muitos</p>
+<p>* @ManyToOne:anotação a nível de atributo, que define uma associação\relacionamento com outra entidade que tenha a multiplicidade de muitos-para-um</p> 
+<p>* @ManyToMany:anotação a nível de atributo, que define uma associação\relacionamento com outra entidade que tenha a multiplicidade de muitos-para-muitos</p> 
+<p>*  @JoinColumn: anotação a nível de atributo: é usado para especificar o mapeamento de uma coluna de chave estrangeira em um relacionamento entre duas entidades. A anotação @JoinColumn é aplicada no lado proprietário da associação para definir o nome da coluna de chave estrangeira e outros atributos relacionados à coluna de junção.</p> 
+<p>* @JoinTable: anotação a nível de atributo, usada para mapear uma relação ManyToMany entre duas entidades</p> 
+<p>* @Transactional: anotação a nível de classe, criar uma transação na persistencia de nosso dados para evitar erros de constraints</p> 
+
+<p></p>
+<h3><strong>Docker</strong></h3>
+<p></p>
+<p>Com o desenvolvimento do projeto e a necessidade de distribuição do projeto para que demais pessoas possam executa-lo, vimos a necessidade de criar um Docker para facilitar este ponto sem que quem desejar utiliza-lo tenha todas as instalações necessárias.</p>
+<p>O que é Docker: é um sistema para desenvolvimento, distribuição ou execução de aplicações. Ele possui um conjunto de funcionalidades que permite que você separe sua aplicação da dependência de infraestrutura, e para isso utiliza-se do conceito de
+virtualização.</p>
+<p></p>  
+<p>Em nosso caso aplicamos os passos e configurações abaixo:</p>
+<p></p>
+<pre>
+* Copiamos o arquivo Dockerfile (Padrão de nome que deve ser respeitado) na pasta raiz do nosso projeto.
+* Geramos o . JAR da nossa aplicação.
+* Fomos na pasta TARGET a partir da raiz do nosso projeto e executamos mvn packge -DskipTests = true pelo terminal no proprio Intelij
+* No terminal executamos talbém o comando docker build -t tech:2.0  e o ponto . ** irá criar a imagem no docker local com as definições do 
+Dockerfile
+* Criamos 2 diretórios na pasta raiz do projeto ** mas poderia ser outra ** sendo: scripts e data, o criamos arquivo docker- 
+compose.yml (Padrão de nome que deve ser respeitado).
+* Copiamos o arquivo .sql  na pasta script (temos ele com detalhes no tópico de banco de dados).
+* Fomos pelo terminal, até o diretório que esta o arquivo docker-compose.yml e executamos o comando: docker compose up -d
+ Com isto o banco irá subir, criando as tabelas caso não existam e startar a nossa aplicação.
+
+ 
+</pre>
+
+
+<p></p>
+<p>Abaixo nosso arquivo Dockerfile: </p>
+
+<p></p>
+<pre>
+FROM adoptopenjdk/maven-openjdk11:latest
+ADD target/*.jar app.jar
+WORKDIR /app
+EXPOSE 8080
+COPY target/*.jar /app/app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+ 
+</pre>
 
 <p></p>  
-<p></p>  
+<p>Estamos fazendo o download da versão 11 do Java, adiconando o arquivo de extensão .JAR de nossa aplicação  , definidno a nossa área de trabalho, a porta que nossa aplicação irá utilizar e o comando quando for executada a imagem e que irá startar a nossa aplicação.</p>  
+<p></p> 
+<p> Abaixo esta nosso arquivo docker-compose que irá executar nossa projeto, mas antes criando uma imagem do banco de dados:</p> 
+<pre>
+version: '3'
+
+services:
+  db:
+    container_name: Techchallenge
+    image: postgres:9.4
+    restart: always
+    volumes:
+     - ./data:/var/lib/postgresql/data
+     - ./scripts/createbanco.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: dbEnergia
+    ports:
+      - 5432:5432
+  web:
+    image: tech:2.0
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    environment:
+      - POSTGRES_URL=dbEnergia
+      - POSTGRES_USERNAME=user
+      - POSTGRES_PASSWORD=123456
+</pre>
+<p></p> 
+<p>Criamos um serviço que executará a imagem de um banco POSTGRES, criando também através do nossos script no tópico de banco as tabelas caso não existam e na sequência executando nossa imagem da aplicação que esta dependente do Banco de dados.</p> 
+<p></p> 
 <h2><strong>Pessoas Desenvolvedoras do Projeto</strong></h2>
 <p>Grupo 38</p>
 <p></p>
