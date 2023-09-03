@@ -59,5 +59,14 @@ public class EnderecoController {
         var endereco = enderecoService.findById(id);
         return ResponseEntity.ok(endereco);
     }
+    @GetMapping
+    public ResponseEntity<EnderecoDTO> findByParam(
+            @RequestParam String rua,
+            @RequestParam String bairro,
+            @RequestParam String municipio
+    ) {
+        var endereco = enderecoService.findByParam(rua, bairro, municipio);
+        return ResponseEntity.ok(endereco);
+    }
 
 }

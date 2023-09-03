@@ -70,5 +70,12 @@ public class PessoaService {
         );
         return pessoa.ToPessoaDTO();
     }
+    @Transactional(readOnly = true)
+    public PessoaDTO findByParam(String nomeNome, String nomeParentesco, String nomeSexo) {
+        var pessoa = pessoaRepository.findByNomeOrParentescoOrSexo(nomeNome, nomeParentesco, nomeSexo ).orElseThrow(
+                () -> new RuntimeException("Pessoa não encontrada")
+        );
+        return pessoa.ToPessoaDTO();
+    }
 
 }
