@@ -7,10 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
-
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -69,6 +74,32 @@ public class PessoaService {
                 () -> new RuntimeException("Endereço não encontrado")
         );
         return pessoa.ToPessoaDTO();
+    }
+    public ResponseEntity<List<PessoaDTO>> pesquisarPessoa (String nome, String parentesco, String sexo){
+
+        Specification<Pessoa> spec = (root, query, criteriaBuilder) -> {
+            // create a list of predicates
+            List<Predicate> predicates = new ArrayList<>();
+
+            // add a predicate for each search parameter
+            if (nome != null) {
+                predicates.add(criteriaBuilder.like(root.get("nome"), nome));
+            }
+            if (parentesco != null) {
+                predicates.add(criteriaBuilder.equal(root.get("modelo"), parentesco));
+            }
+            if (sexo != null) {
+                predicates.add(criteriaBuilder.equal(root.get("potencia"), sexo));
+            }
+
+            // combine the predicates into a single query
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        List<Pessoa> listaRetorno =  pessoaRepository.findAll(spec);
+        if (!listaRetorno.isEmpty()) {
+            return ResponseEntity.ok(listaRetorno.stream().map(PessoaDTO::new).collect(Collectors.toList()));
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pessoa")
@@ -46,6 +47,22 @@ public class PessoaController {
     public ResponseEntity<PessoaDTO> findById(@PathVariable Long id) {
         var pessoa = pessoaService.findById(id);
         return ResponseEntity.ok(pessoa);
+    }
+    @GetMapping("/pesquisar")
+    public ResponseEntity<List<PessoaDTO>> pesquisarPessoa(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String parentesco,
+            @RequestParam(required = false) String sexo
+    ){
+
+        if((nome == null || nome.isBlank())
+                && (parentesco == null || parentesco.isBlank())
+                && (sexo == null || sexo.isBlank())
+        ){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return pessoaService.pesquisarPessoa(nome, parentesco, sexo);
     }
 
     @PutMapping("/{id}")

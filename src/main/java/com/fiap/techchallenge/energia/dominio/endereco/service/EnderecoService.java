@@ -22,17 +22,12 @@ public class EnderecoService {
 
     private static Logger logger = LoggerFactory.getLogger(EnderecoService.class);
 
-//    @Autowired
-//    EletrodomesticoRepository eletrodomesticoRepository;
     @Autowired
     IEnderecoRepository enderecoRepository;
 
-    @Autowired
-    private ValidatorBean validator;
 
-//    @Autowired
-//    private IEnderecoRepository enderecoRepository;
-    public ResponseEntity<List<EnderecoDTO>> pesquisarEndereco (String rua, String bairro, String cidade){
+
+    public ResponseEntity<List<EnderecoDTO>> pesquisarEndereco (String rua, String bairro, String municipio){
 
         Specification<Endereco> spec = (root, query, criteriaBuilder) -> {
             // create a list of predicates
@@ -45,8 +40,8 @@ public class EnderecoService {
             if (bairro != null) {
                 predicates.add(criteriaBuilder.equal(root.get("bairro"), bairro));
             }
-            if (cidade != null) {
-                predicates.add(criteriaBuilder.equal(root.get("cidade"), cidade));
+            if (municipio != null) {
+                predicates.add(criteriaBuilder.equal(root.get("cidade"), municipio));
             }
 
             // combine the predicates into a single query
