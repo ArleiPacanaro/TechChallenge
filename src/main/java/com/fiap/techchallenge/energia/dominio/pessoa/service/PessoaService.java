@@ -10,7 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
-
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -71,11 +72,9 @@ public class PessoaService {
         return pessoa.ToPessoaDTO();
     }
     @Transactional(readOnly = true)
-    public PessoaDTO findByParam(String nomeNome, String nomeParentesco, String nomeSexo) {
-        var pessoa = pessoaRepository.findByNomeOrParentescoOrSexo(nomeNome, nomeParentesco, nomeSexo ).orElseThrow(
-                () -> new RuntimeException("Pessoa não encontrada")
-        );
-        return pessoa.ToPessoaDTO();
+    public List<PessoaDTO> findByParam(String nomeNome, String nomeParentesco, String nomeSexo) {
+        var pessoa = pessoaRepository.findByNomeOrParentescoOrSexo(nomeNome, nomeParentesco, nomeSexo);
+        return pessoa.stream().map(PessoaDTO::new).collect(Collectors.toList());
     }
 
 }

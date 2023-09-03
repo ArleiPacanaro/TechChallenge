@@ -28,7 +28,6 @@ public class UsuarioController {
 
     }
 
-
     @PostMapping
     public ResponseEntity<UsuarioDTO> save(@Valid @RequestBody UsuarioDTO dto) {
         var usuario = usuarioService.save(dto);
@@ -66,6 +65,5 @@ public class UsuarioController {
         usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }

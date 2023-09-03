@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EnderecoService {
@@ -64,11 +66,11 @@ public class EnderecoService {
         );
         return endereco.ToEnderecoDTO();
     }
+
     @Transactional(readOnly = true)
-    public EnderecoDTO findByParam(String nomeRua, String nomeBairro, String nomeMunicipio) {
-        var endereco = enderecoRepository.findByRuaOrBairroOrMunicipio(nomeRua, nomeBairro, nomeMunicipio).orElseThrow(
-                () -> new RuntimeException("Endereço não encontrado")
-        );
-        return endereco.ToEnderecoDTO();
+    public List<EnderecoDTO> findByParam(String nomeRua, String nomeBairro, String nomeMunicipio) {
+        var endereco = enderecoRepository.findByRuaOrBairroOrMunicipio(nomeRua, nomeBairro, nomeMunicipio);
+        return endereco.stream().map(EnderecoDTO::new).collect(Collectors.toList());
     }
+
 }

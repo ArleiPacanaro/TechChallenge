@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/endereco")
@@ -59,8 +60,9 @@ public class EnderecoController {
         var endereco = enderecoService.findById(id);
         return ResponseEntity.ok(endereco);
     }
-    @GetMapping
-    public ResponseEntity<EnderecoDTO> findByParam(
+
+    @GetMapping("/Pesquisar")
+    public ResponseEntity<List<EnderecoDTO>> findByParam(
             @RequestParam String rua,
             @RequestParam String bairro,
             @RequestParam String municipio

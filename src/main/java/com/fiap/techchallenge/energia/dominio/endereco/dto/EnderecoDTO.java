@@ -1,8 +1,6 @@
 package com.fiap.techchallenge.energia.dominio.endereco.dto;
 
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
-import com.fiap.techchallenge.energia.dominio.pessoa.dto.PessoaDTO;
-import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,9 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -51,11 +48,9 @@ public class EnderecoDTO {
     @ApiModelProperty(value = "Complemento do endereco", example = "AP 101 - Condominio Bosque das Rosas", position = 1)
     private String complemento;
 
-    @ApiModelProperty(value = "Pessoas relacionados com o endereço", example = "2", position = 1)
-    private Set<PessoaDTO> pessoaDTOSet = new HashSet<>();
-
-//    @ApiModelProperty(value = "Eletrodomesticos relacionados com o endereço", example = "2", position = 1)
-//    private Set<EletrodomesticoDTO> eletrodomesticoDTOSet = new HashSet<>();
+    @ApiModelProperty(value = "Código  com o ID do usuario", example = "2", position = 1)
+    @NotNull(message = "id do usuario deve ser preenchido")
+    private Long idusuario;
 
     public EnderecoDTO(Endereco endereco) {
         this.id = endereco.getId();
@@ -66,18 +61,8 @@ public class EnderecoDTO {
         this.rua = endereco.getRua();
         this.cep = endereco.getCep();
         this.complemento = endereco.getComplemento();
+        this.idusuario = endereco.getIdusuario();
     }
-
-    public EnderecoDTO(Endereco endereco, Set<Pessoa> pessoas) {
-        this(endereco);
-        pessoas.forEach(pessoa -> this.pessoaDTOSet.add(new PessoaDTO(pessoa)));
-    }
-
-//    public EnderecoDTO(Endereco endereco, Set<Pessoa> pessoas, Set<Eletrodomestico> eletrodomesticos) {
-//       this(endereco);
-//        pessoas.forEach(pessoa -> this.pessoaDTOSet.add(new PessoaDTO(pessoa)));
-//        eletrodomesticos.forEach(eletrodomestico -> this.eletrodomesticoDTOSet.add(new EletrodomesticosDTO(eletrodomestico)));
-//    }
 
     public Endereco toEntity() {
         Endereco endereco = new Endereco();
@@ -89,6 +74,7 @@ public class EnderecoDTO {
         endereco.setRua(this.rua);
         endereco.setCep(this.cep);
         endereco.setComplemento(this.complemento);
+        endereco.setIdusuario(this.idusuario);
 
         return endereco;
     }
@@ -101,5 +87,7 @@ public class EnderecoDTO {
         endereco.setRua(this.rua);
         endereco.setCep(this.cep);
         endereco.setComplemento(this.complemento);
+        endereco.setIdusuario(this.idusuario);
     }
+
 }

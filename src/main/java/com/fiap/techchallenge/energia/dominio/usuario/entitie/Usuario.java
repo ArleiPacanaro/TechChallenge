@@ -1,5 +1,6 @@
 package com.fiap.techchallenge.energia.dominio.usuario.entitie;
 
+import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
 import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
 import com.fiap.techchallenge.energia.dominio.usuario.dto.UsuarioDTO;
 import com.fiap.techchallenge.energia.dominio.usuario.dto.UsuarioPessoaDTO;
@@ -24,9 +25,10 @@ public class Usuario {
     private Long id;
     private String username;
     private String senha;
-
     @OneToMany(mappedBy = "usuario")
     private List<Pessoa> pessoa;
+    @OneToMany(mappedBy = "usuario")
+    private List<Endereco> endereco;
 
     public UsuarioDTO ToUsuarioDTO() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -35,12 +37,9 @@ public class Usuario {
         usuarioDTO.setSenha(this.senha);
 
         return usuarioDTO;
-
     }
 
     public UsuarioPessoaDTO ToUsuarioPessoaDTO(){
-
         return new UsuarioPessoaDTO(this);
-
     }
 }

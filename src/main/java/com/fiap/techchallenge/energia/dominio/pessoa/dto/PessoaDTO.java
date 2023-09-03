@@ -1,8 +1,6 @@
 package com.fiap.techchallenge.energia.dominio.pessoa.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoDTO;
-import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
 import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,11 +13,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 
 @Setter
 @Getter
@@ -30,7 +23,7 @@ public class PessoaDTO {
     @ApiModelProperty(value = "ID do usuario", example = "1", position = 1)
     private Long id;
 
-    @ApiModelProperty(value = "CPF do usuario", example = "12345678911", position = 1)
+    @ApiModelProperty(value = "CPF válido do usuario", example = "07506450089", position = 1)
     @CPF(message = "CPF deve ser valido")
     @NotBlank(message = "CPF deve ser preenchido")
     private String cpf;
@@ -65,11 +58,8 @@ public class PessoaDTO {
     private String parentesco;
 
     @ApiModelProperty(value = "Código  com o ID do usuario", example = "2", position = 1)
-    @NotNull(message = "id do usuarios deve ser preenchido")
+    @NotNull(message = "id do usuario deve ser preenchido")
     private Long idusuario;
-
-    @ApiModelProperty(value = "Enderecos do usuario", example = "2", position = 1)
-    private Set<EnderecoDTO> enderecos = new HashSet<>();
 
     public PessoaDTO(Pessoa pessoa) {
 
@@ -83,15 +73,7 @@ public class PessoaDTO {
                 this.sexo = pessoa.getSexo();
                 this.parentesco = pessoa.getParentesco();
                 this.idusuario = pessoa.getIdusuario();
-
     }
-
-
-    public PessoaDTO(Pessoa pessoa, Set<Endereco> enderecos) {
-        this(pessoa);
-        enderecos.forEach(endereco -> this.enderecos.add(new EnderecoDTO(endereco)));
-    }
-
 
     public Pessoa toEntity() {
         Pessoa pessoa = new Pessoa();
@@ -106,12 +88,8 @@ public class PessoaDTO {
         pessoa.setParentesco(this.parentesco);
         pessoa.setIdusuario(this.idusuario);
 
-
-
         return pessoa;
-
     }
-
 
     public void ToMapperEntity(Pessoa entity) {
 
@@ -124,6 +102,6 @@ public class PessoaDTO {
         entity.setSexo(this.sexo);
         entity.setParentesco(this.parentesco);
         entity.setIdusuario(this.idusuario);
-
     }
+
 }
