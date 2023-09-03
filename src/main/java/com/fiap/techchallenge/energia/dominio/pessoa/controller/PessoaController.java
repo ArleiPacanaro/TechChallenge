@@ -47,8 +47,12 @@ public class PessoaController {
         var pessoa = pessoaService.findById(id);
         return ResponseEntity.ok(pessoa);
     }
-    @GetMapping("/{nome}/{parentesco}/{sexo}")
-    public ResponseEntity<PessoaDTO> findByParam(@RequestParam String nome, String parentesco, String sexo) {
+    @GetMapping
+    public ResponseEntity<PessoaDTO> findByParam(
+            @RequestParam String nome,
+            @RequestParam String parentesco,
+            @RequestParam String sexo
+    ) {
         var pessoa = pessoaService.findByParam(nome, parentesco, sexo);
         return ResponseEntity.ok(pessoa);
     }
