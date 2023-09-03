@@ -47,11 +47,12 @@ CREATE TABLE IF NOT exists  tb_pessoa_endereco
 
 CREATE TABLE IF NOT exists  tb_eletrodomestico
 (
-    id 		 	         SERIAL       PRIMARY KEY,
-    nome	 	         VARCHAR(255) NOT NULL,
-   	potencia 	 		 INTEGER ,
-   	serialNumber 	     VARCHAR(30)  NOT NULL,
-   	idEndereco   		 SERIAL 	  NOT null unique ,
+    	id 	 	         SERIAL       PRIMARY KEY,
+    	nome	 	         VARCHAR(255) NOT NULL,
+    	modelo	 	         VARCHAR(255) NOT NULL,
+   	potencia 	 	INTEGER ,
+   	serialNumber 	     	VARCHAR(30)  NOT NULL unique,
+   	idEndereco   		 SERIAL 	  NOT null ,
     FOREIGN KEY (idEndereco) REFERENCES tb_endereco (id) ON DELETE CASCADE
 );
 
