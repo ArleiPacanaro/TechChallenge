@@ -64,5 +64,11 @@ public class EnderecoService {
         );
         return endereco.ToEnderecoDTO();
     }
-
+    @Transactional(readOnly = true)
+    public EnderecoDTO findByParam(String nomeRua, String nomeBairro, String nomeMunicipio) {
+        var endereco = enderecoRepository.findByRuaOrBairroOrMunicipio(nomeRua, nomeBairro, nomeMunicipio).orElseThrow(
+                () -> new RuntimeException("Endereço não encontrado")
+        );
+        return endereco.ToEnderecoDTO();
+    }
 }
