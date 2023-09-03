@@ -1,5 +1,6 @@
 package com.fiap.techchallenge.energia.dominio.usuario.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.techchallenge.energia.dominio.usuario.entitie.Usuario;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,8 +17,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioDTO {
-
-    @ApiModelProperty(value = "Informacao do id do usuário", example = "1", position = 1)
     private Long id;
     @ApiModelProperty(value = "Informacao do nome do usuário", example = "Arlei", position = 1)
     @NotBlank(message="Username e obrigatório")

@@ -1,15 +1,16 @@
 package com.fiap.techchallenge.energia.dominio.eletrodomestico.entitie;
 
+import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-@Data
-@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "tb_eletrodomestico")
 public class Eletrodomestico {
 
@@ -30,8 +31,15 @@ public class Eletrodomestico {
     @Column(name = "serialnumber")
     private String serialNumber;
 
+    @Column(name = "idendereco")
+    private Long idendereco;
+
     @ManyToOne
-    @JoinColumn(name = "idendereco")
+    @JoinColumn(name = "idendereco", insertable=false, updatable=false)
     private Endereco endereco;
+
+    public EletrodomesticoDTO ToEletrodomesticoDTO(){
+        return new EletrodomesticoDTO(this);
+    }
 
 }

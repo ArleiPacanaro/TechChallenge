@@ -1,6 +1,7 @@
 package com.fiap.techchallenge.energia.dominio.endereco.service;
 
 import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
 import com.fiap.techchallenge.energia.dominio.endereco.repository.IEnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class EnderecoService {
     }
 
     @Transactional(readOnly = true)
-    public Page<EnderecoDTO> findAll(PageRequest pageRequest) { //alterar pelo DTO a ser criado para retornar o endereco vinculado as pessoas e eletrodomesticos
+    public Page<EnderecoEletrodomesticoDTO> findAll(PageRequest pageRequest) { //alterar pelo DTO a ser criado para retornar o endereco vinculado as pessoas e eletrodomesticos
         var enderecos = enderecoRepository.findAll(pageRequest);
-        return  enderecos.map(Endereco::ToEnderecoDTO); //alterar pelo DTO a ser criado para retornar o endereco vinculado as pessoas e eletrodomesticos
+        return  enderecos.map(Endereco::ToEnderecoEletrodomesticoDTO); //alterar pelo DTO a ser criado para retornar o endereco vinculado as pessoas e eletrodomesticos
     }
 
     @Transactional
@@ -60,17 +61,17 @@ public class EnderecoService {
     }
 
     @Transactional(readOnly = true)
-    public EnderecoDTO findById(Long id) {
+    public EnderecoEletrodomesticoDTO findById(Long id) {
         var endereco = enderecoRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Endereço não encontrado")
         );
-        return endereco.ToEnderecoDTO();
+        return endereco.ToEnderecoEletrodomesticoDTO();
     }
 
     @Transactional(readOnly = true)
-    public List<EnderecoDTO> findByParam(String nomeRua, String nomeBairro, String nomeMunicipio) {
+    public List<EnderecoEletrodomesticoDTO> findByParam(String nomeRua, String nomeBairro, String nomeMunicipio) {
         var endereco = enderecoRepository.findByRuaOrBairroOrMunicipio(nomeRua, nomeBairro, nomeMunicipio);
-        return endereco.stream().map(EnderecoDTO::new).collect(Collectors.toList());
+        return endereco.stream().map(EnderecoEletrodomesticoDTO::new).collect(Collectors.toList());
     }
 
 }

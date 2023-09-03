@@ -1,6 +1,7 @@
 package com.fiap.techchallenge.energia.dominio.pessoa.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PessoaDTO {
 
-    @ApiModelProperty(value = "ID do usuario", example = "1", position = 1)
     private Long id;
 
     @ApiModelProperty(value = "CPF válido do usuario", example = "07506450089", position = 1)

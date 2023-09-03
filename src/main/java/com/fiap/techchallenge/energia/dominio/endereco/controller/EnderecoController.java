@@ -1,6 +1,7 @@
 package com.fiap.techchallenge.energia.dominio.endereco.controller;
 
 import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +33,7 @@ public class EnderecoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<EnderecoDTO>> findAll(
+    public ResponseEntity<Page<EnderecoEletrodomesticoDTO>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage)
     {
@@ -56,13 +57,13 @@ public class EnderecoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EnderecoDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<EnderecoEletrodomesticoDTO> findById(@PathVariable Long id) {
         var endereco = enderecoService.findById(id);
         return ResponseEntity.ok(endereco);
     }
 
     @GetMapping("/Pesquisar")
-    public ResponseEntity<List<EnderecoDTO>> findByParam(
+    public ResponseEntity<List<EnderecoEletrodomesticoDTO>> findByParam(
             @RequestParam String rua,
             @RequestParam String bairro,
             @RequestParam String municipio
