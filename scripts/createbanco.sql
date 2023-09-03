@@ -27,7 +27,7 @@ CREATE TABLE IF NOT exists  tb_endereco
    	municipio 	 VARCHAR(255),
    	bairro 	     VARCHAR(255)  NOT NULL,
    	cep 	     VARCHAR(30)   NOT NULL,
-   	complemento   VARCHAR(30),
+   	complemento   VARCHAR(255),
 	rua	     VARCHAR(255)  NOT NULL,
     idUsuario         BIGINT       NOT null,
     FOREIGN KEY (idUsuario) REFERENCES tb_usuario (id) ON DELETE CASCADE
