@@ -1,4 +1,4 @@
-    FROM adoptopenjdk/maven-openjdk11:latest
+    FROM openjdk:11
     ADD target/*.jar app.jar
     WORKDIR /appp
     EXPOSE 8080
