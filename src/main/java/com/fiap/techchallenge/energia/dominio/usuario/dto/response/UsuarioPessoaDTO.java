@@ -1,7 +1,7 @@
-package com.fiap.techchallenge.energia.dominio.usuario.dto;
+package com.fiap.techchallenge.energia.dominio.usuario.dto.response;
 
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoDTO;
-import com.fiap.techchallenge.energia.dominio.pessoa.dto.PessoaDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoDTO;
+import com.fiap.techchallenge.energia.dominio.pessoa.dto.response.PessoaDTO;
 import com.fiap.techchallenge.energia.dominio.usuario.entitie.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

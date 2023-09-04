@@ -1,8 +1,8 @@
 package com.fiap.techchallenge.energia.dominio.eletrodomestico.controller;
 
-import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.request.EletrodomesticoRequestDTO;
+import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.response.EletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.service.EletrodomesticoService;
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,12 +20,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/eletrodomestico")
 public class EletrodomesticoController {
+    private final EletrodomesticoService eletrodomesticoService;
 
     @Autowired
-    EletrodomesticoService eletrodomesticoService;
+    public EletrodomesticoController(EletrodomesticoService eletrodomesticoService) {
+        this.eletrodomesticoService = eletrodomesticoService;
+    }
 
     @PostMapping
-    public ResponseEntity<EletrodomesticoDTO> cadastrarEletrodomestico(@RequestBody EletrodomesticoDTO dto) {
+    public ResponseEntity<EletrodomesticoDTO> cadastrarEletrodomestico(@RequestBody EletrodomesticoRequestDTO dto) {
         var eletrodomestico = eletrodomesticoService.save(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((eletrodomestico.getId())).toUri();
         return ResponseEntity.created(uri).body(eletrodomestico);
@@ -34,8 +37,7 @@ public class EletrodomesticoController {
     @GetMapping
     public ResponseEntity<Page<EletrodomesticoDTO>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage)
-    {
+            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage);
         var enderecoDTO = eletrodomesticoService.findAll(pageRequest);
         return ResponseEntity.ok().body(enderecoDTO);
@@ -49,9 +51,9 @@ public class EletrodomesticoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<EletrodomesticoDTO> update(
-            @Valid @RequestBody EletrodomesticoDTO eletrodomesticoDTO,
+            @Valid @RequestBody EletrodomesticoRequestDTO dto,
             @PathVariable Long id) {
-        var eletromestico = eletrodomesticoService.update(id, eletrodomesticoDTO);
+        var eletromestico = eletrodomesticoService.update(id, dto);
         return ResponseEntity.ok(eletromestico);
     }
 
@@ -72,7 +74,7 @@ public class EletrodomesticoController {
     }
 
     @GetMapping("/calcularConsumo")
-    public ResponseEntity calcularConsumo(@RequestParam Long id, @RequestParam Long minutos){
+    public ResponseEntity calcularConsumo(@RequestParam Long id, @RequestParam Long minutos) {
         return eletrodomesticoService.retornarConsumo(id, minutos);
     }
 

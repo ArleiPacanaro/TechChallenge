@@ -1,6 +1,7 @@
 package com.fiap.techchallenge.energia.dominio.pessoa.service;
 
-import com.fiap.techchallenge.energia.dominio.pessoa.dto.PessoaDTO;
+import com.fiap.techchallenge.energia.dominio.pessoa.dto.request.PessoaRequestDTO;
+import com.fiap.techchallenge.energia.dominio.pessoa.dto.response.PessoaDTO;
 import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
 import com.fiap.techchallenge.energia.dominio.pessoa.repository.IPessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class PessoaService {
 
 
     @Transactional
-    public PessoaDTO save(PessoaDTO dto) {
+    public PessoaDTO save(PessoaRequestDTO dto) {
         var entity = dto.toEntity();
         var pessoaSaved = pessoaRepository.save(entity);
         return pessoaSaved.ToPessoaDTO();
@@ -40,10 +41,8 @@ public class PessoaService {
     }
 
     @Transactional
-    public PessoaDTO update(Long id, PessoaDTO dto) {
+    public PessoaDTO update(Long id, PessoaRequestDTO dto) {
         try {
-
-            // tem que fazer desta forma para entender que a entendidade existe no banco de dados...
             Pessoa entity = pessoaRepository.getReferenceById(id);
             dto.ToMapperEntity(entity);
 
@@ -51,7 +50,7 @@ public class PessoaService {
             return pessoaSaved.ToPessoaDTO();
 
         }  catch (EntityNotFoundException e) {
-            throw new RuntimeException("Endereço não encontrado, id: " + id);
+            throw new RuntimeException("Pessoa não encontrada, id: " + id);
         }
     }
 
@@ -67,7 +66,7 @@ public class PessoaService {
     @Transactional(readOnly = true)
     public PessoaDTO findById(Long id) {
         var pessoa = pessoaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Endereço não encontrado")
+                () -> new RuntimeException("Pessoa não encontrada")
         );
         return pessoa.ToPessoaDTO();
     }

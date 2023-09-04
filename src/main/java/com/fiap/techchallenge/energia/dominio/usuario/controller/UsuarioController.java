@@ -1,8 +1,9 @@
 package com.fiap.techchallenge.energia.dominio.usuario.controller;
 
-import com.fiap.techchallenge.energia.dominio.usuario.dto.UsuarioDTO;
-import com.fiap.techchallenge.energia.dominio.usuario.dto.UsuarioPessoaDTO;
-import com.fiap.techchallenge.energia.dominio.usuario.repository.IUsuarioRepository;
+import com.fiap.techchallenge.energia.dominio.pessoa.service.PessoaService;
+import com.fiap.techchallenge.energia.dominio.usuario.dto.request.UsuarioRequestDTO;
+import com.fiap.techchallenge.energia.dominio.usuario.dto.response.UsuarioDTO;
+import com.fiap.techchallenge.energia.dominio.usuario.dto.response.UsuarioPessoaDTO;
 import com.fiap.techchallenge.energia.dominio.usuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,6 @@ import java.net.URI;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -29,7 +29,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> save(@Valid @RequestBody UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> save(@Valid @RequestBody UsuarioRequestDTO dto) {
         var usuario = usuarioService.save(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((usuario.getId())).toUri();
         return ResponseEntity.created(uri).body(usuario);
@@ -54,7 +54,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> update(
-            @Valid @RequestBody UsuarioDTO dto,
+            @Valid @RequestBody UsuarioRequestDTO dto,
             @PathVariable Long id) {
         var usuario = usuarioService.update(id, dto);
         return ResponseEntity.ok(usuario);

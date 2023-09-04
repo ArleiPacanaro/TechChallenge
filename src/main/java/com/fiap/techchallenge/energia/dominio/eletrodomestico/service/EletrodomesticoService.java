@@ -1,9 +1,9 @@
 package com.fiap.techchallenge.energia.dominio.eletrodomestico.service;
 
-import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.request.EletrodomesticoRequestDTO;
+import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.response.EletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.entitie.Eletrodomestico;
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.repository.EletrodomesticoRepository;
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class EletrodomesticoService {
     @Autowired
     EletrodomesticoRepository eletrodomesticoRepository;
     @Transactional
-    public EletrodomesticoDTO save(EletrodomesticoDTO eletrodomesticoDTO) {
+    public EletrodomesticoDTO save(EletrodomesticoRequestDTO eletrodomesticoDTO) {
         var eletrodomesticoEntity = eletrodomesticoDTO.toEntity();
         var eletrodomesticoSaved = eletrodomesticoRepository.save(eletrodomesticoEntity);
         return eletrodomesticoSaved.ToEletrodomesticoDTO();
@@ -49,7 +49,7 @@ public class EletrodomesticoService {
     }
 
     @Transactional
-    public EletrodomesticoDTO update(Long id, EletrodomesticoDTO eletrodomesticoDTO) {
+    public EletrodomesticoDTO update(Long id, EletrodomesticoRequestDTO eletrodomesticoDTO) {
         try {
             Eletrodomestico eletrodomesticoEntity = eletrodomesticoRepository.getReferenceById(id);
             eletrodomesticoDTO.ToMapperEntity(eletrodomesticoEntity);

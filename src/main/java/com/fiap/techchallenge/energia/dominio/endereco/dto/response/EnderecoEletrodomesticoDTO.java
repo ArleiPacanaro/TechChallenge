@@ -1,6 +1,6 @@
-package com.fiap.techchallenge.energia.dominio.endereco.dto;
+package com.fiap.techchallenge.energia.dominio.endereco.dto.response;
 
-import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.EletrodomesticoDTO;
+import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.response.EletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

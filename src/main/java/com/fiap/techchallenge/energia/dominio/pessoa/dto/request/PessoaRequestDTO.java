@@ -1,8 +1,8 @@
-package com.fiap.techchallenge.energia.dominio.pessoa.dto;
+package com.fiap.techchallenge.energia.dominio.pessoa.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,15 +14,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
-
+@ApiModel(description = "Representa um objeto de  Pessoas")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PessoaDTO {
-
-    private Long id;
-
+public class PessoaRequestDTO {
     @ApiModelProperty(value = "CPF válido do usuario", example = "07506450089", position = 1)
     @CPF(message = "CPF deve ser valido")
     @NotBlank(message = "CPF deve ser preenchido")
@@ -57,23 +54,9 @@ public class PessoaDTO {
     @NotBlank(message = "parentesco deve ser preenchido")
     private String parentesco;
 
-    @ApiModelProperty(value = "Código  com o ID do usuario", example = "2", position = 1)
+    @ApiModelProperty(value = "Código  com o ID do usuario", example = "1", position = 1)
     @NotNull(message = "id do usuario deve ser preenchido")
     private Long idusuario;
-
-    public PessoaDTO(Pessoa pessoa) {
-
-                this.id = pessoa.getId();
-                this.cpf = pessoa.getCpf();
-                this.nome = pessoa.getNome();
-                this.telefone = pessoa.getTelefone();
-                this.email = pessoa.getEmail();
-                this.senha = pessoa.getSenha();
-                this.datanascimento = pessoa.getDatanascimento();
-                this.sexo = pessoa.getSexo();
-                this.parentesco = pessoa.getParentesco();
-                this.idusuario = pessoa.getIdusuario();
-    }
 
     public Pessoa toEntity() {
         Pessoa pessoa = new Pessoa();

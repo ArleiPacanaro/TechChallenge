@@ -1,6 +1,6 @@
 package com.fiap.techchallenge.energia.dominio.pessoa.entitie;
 
-import com.fiap.techchallenge.energia.dominio.pessoa.dto.PessoaDTO;
+import com.fiap.techchallenge.energia.dominio.pessoa.dto.response.PessoaDTO;
 import com.fiap.techchallenge.energia.dominio.usuario.entitie.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

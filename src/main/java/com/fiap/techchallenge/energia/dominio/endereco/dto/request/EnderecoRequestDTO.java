@@ -1,6 +1,7 @@
-package com.fiap.techchallenge.energia.dominio.endereco.dto;
+package com.fiap.techchallenge.energia.dominio.endereco.dto.request;
 
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,16 +11,12 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
+@ApiModel(description = "Representa um objeto de  Endereco")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnderecoDTO {
-
-    @ApiModelProperty(value = "ID do endereco", example = "1", position = 1)
-    private Long id;
-
+public class EnderecoRequestDTO {
     @ApiModelProperty(value = "Nome do país", example = "BR", position = 1)
     @NotBlank(message = "O nome do País deve ser preenchido")
     private String pais;
@@ -45,24 +42,12 @@ public class EnderecoDTO {
     @NotBlank(message = "O número do CEP deve ser preenchido")
     private String cep;
 
-    @ApiModelProperty(value = "Complemento do endereco", example = "AP 101 - Condominio Bosque das Rosas", position = 1)
+    @ApiModelProperty(value = "Complemento do endereco", example = "Apartamento 101", position = 1)
     private String complemento;
 
-    @ApiModelProperty(value = "Código  com o ID do usuario", example = "2", position = 1)
+    @ApiModelProperty(value = "Código  com o ID do usuario", example = "1", position = 1)
     @NotNull(message = "id do usuario deve ser preenchido")
     private Long idusuario;
-
-    public EnderecoDTO(Endereco endereco) {
-        this.id = endereco.getId();
-        this.pais = endereco.getPais();
-        this.estado = endereco.getEstado();
-        this.municipio = endereco.getMunicipio();
-        this.bairro = endereco.getBairro();
-        this.rua = endereco.getRua();
-        this.cep = endereco.getCep();
-        this.complemento = endereco.getComplemento();
-        this.idusuario = endereco.getIdusuario();
-    }
 
     public Endereco toEntity() {
         Endereco endereco = new Endereco();
@@ -89,5 +74,4 @@ public class EnderecoDTO {
         endereco.setComplemento(this.complemento);
         endereco.setIdusuario(this.idusuario);
     }
-
 }
