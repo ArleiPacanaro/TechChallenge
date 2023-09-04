@@ -43,10 +43,15 @@ public class EletrodomesticoController {
         return ResponseEntity.ok().body(enderecoDTO);
     }
 
+//    @GetMapping("/{id}")
+//    public ResponseEntity<EletrodomesticoDTO> findById(@PathVariable Long id) {
+//        var eletromestico = eletrodomesticoService.findById(id);
+//        return ResponseEntity.ok(eletromestico);
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EletrodomesticoDTO> findById(@PathVariable Long id) {
-        var eletromestico = eletrodomesticoService.findById(id);
-        return ResponseEntity.ok(eletromestico);
+        return eletrodomesticoService.findById(id);
     }
 
     @PutMapping("/{id}")
@@ -63,14 +68,23 @@ public class EletrodomesticoController {
         return ResponseEntity.noContent().build();
     }
 
+//    @GetMapping("/Pesquisar")
+//    public ResponseEntity<List<EletrodomesticoDTO>> findByParam(
+//            @RequestParam(required = false) String nome,
+//            @RequestParam(required = false) String modelo,
+//            @RequestParam(required = false) Integer potencia
+//    ) {
+//        var eletrodomesticos = eletrodomesticoService.findByParam(nome, modelo, potencia);
+//        return ResponseEntity.ok(eletrodomesticos);
+//    }
+
     @GetMapping("/Pesquisar")
     public ResponseEntity<List<EletrodomesticoDTO>> findByParam(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String modelo,
             @RequestParam(required = false) Integer potencia
     ) {
-        var eletrodomesticos = eletrodomesticoService.findByParam(nome, modelo, potencia);
-        return ResponseEntity.ok(eletrodomesticos);
+        return eletrodomesticoService.findByParam(nome, modelo, potencia);
     }
 
     @GetMapping("/calcularConsumo")

@@ -43,20 +43,34 @@ public class PessoaController {
         return ResponseEntity.created(uri).body(pessoa);
     }
 
+//    @GetMapping("/{id}")
+//    public ResponseEntity<PessoaDTO> findById(@PathVariable Long id) {
+//        var pessoa = pessoaService.findById(id);
+//        return ResponseEntity.ok(pessoa);
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PessoaDTO> findById(@PathVariable Long id) {
-        var pessoa = pessoaService.findById(id);
-        return ResponseEntity.ok(pessoa);
+        return pessoaService.findById(id);
     }
+
+//    @GetMapping("/Pesquisar")
+//    public ResponseEntity<List<PessoaDTO>> findByParam(
+//            @RequestParam (required = false)String nome,
+//            @RequestParam (required = false)String parentesco,
+//            @RequestParam (required = false)String sexo
+//    ) {
+//        var pessoa = pessoaService.findByParam(nome, parentesco, sexo);
+//        return ResponseEntity.ok(pessoa);
+//    }
 
     @GetMapping("/Pesquisar")
     public ResponseEntity<List<PessoaDTO>> findByParam(
-            @RequestParam (required = false)String nome,
-            @RequestParam (required = false)String parentesco,
-            @RequestParam (required = false)String sexo
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String parentesco,
+            @RequestParam(required = false) String sexo
     ) {
-        var pessoa = pessoaService.findByParam(nome, parentesco, sexo);
-        return ResponseEntity.ok(pessoa);
+        return pessoaService.findByParam(nome, parentesco, sexo);
     }
 
     @PutMapping("/{id}")

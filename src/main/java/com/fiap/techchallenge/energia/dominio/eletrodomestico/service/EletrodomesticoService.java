@@ -38,22 +38,40 @@ public class EletrodomesticoService {
         return eletrodomesticos.map(Eletrodomestico::ToEletrodomesticoDTO);
     }
 
-    @Transactional(readOnly = true)
-    public EletrodomesticoDTO findById(Long id) {
-        var eletrodomesticos = eletrodomesticoRepository.findById(id).orElseThrow(
-                () -> new ServiceNotFoundedException("Eletrodomestico não encontrado")
-        );
-        return eletrodomesticos.ToEletrodomesticoDTO();
-    }
+//    @Transactional(readOnly = true)
+//    public EletrodomesticoDTO findById(Long id) {
+//        var eletrodomesticos = eletrodomesticoRepository.findById(id).orElseThrow(
+//                () -> new ServiceNotFoundedException("Eletrodomestico não encontrado")
+//        );
+//        return eletrodomesticos.ToEletrodomesticoDTO();
+//    }
 
     @Transactional(readOnly = true)
-    public List<EletrodomesticoDTO> findByParam(String nome, String modelo, Integer potencia) {
-        try{
-            var eletrodomestico = eletrodomesticoRepository.findByNomeOrModeloOrPotencia(nome, modelo, potencia);
-            return eletrodomestico.stream().map(EletrodomesticoDTO::new).collect(Collectors.toList());
-        } catch (EntityNotFoundException e) {
-            throw new ServiceNotFoundedException("Eletrodomestico não encontrada");
+    public ResponseEntity<EletrodomesticoDTO> findById(Long id) {
+        var eletrodomesticos = eletrodomesticoRepository.findById(id);
+        if(eletrodomesticos.isPresent()) {
+            return ResponseEntity.ok(eletrodomesticos.get().ToEletrodomesticoDTO());
         }
+        return  ResponseEntity.notFound().build();
+    }
+
+//    @Transactional(readOnly = true)
+//    public List<EletrodomesticoDTO> findByParam(String nome, String modelo, Integer potencia) {
+//        try{
+//            var eletrodomestico = eletrodomesticoRepository.findByNomeOrModeloOrPotencia(nome, modelo, potencia);
+//            return eletrodomestico.stream().map(EletrodomesticoDTO::new).collect(Collectors.toList());
+//        } catch (EntityNotFoundException e) {
+//            throw new ServiceNotFoundedException("Eletrodomestico não encontrada");
+//        }
+//    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<EletrodomesticoDTO>> findByParam(String nome, String modelo, Integer potencia) {
+        var eletrodomestico = eletrodomesticoRepository.findByNomeOrModeloOrPotencia(nome, modelo, potencia);
+        if(!eletrodomestico.isEmpty()) {
+            return ResponseEntity.ok(eletrodomestico.stream().map(EletrodomesticoDTO::new).collect(Collectors.toList()));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Transactional

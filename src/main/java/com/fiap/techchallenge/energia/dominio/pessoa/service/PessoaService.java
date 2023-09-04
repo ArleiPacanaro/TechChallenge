@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
@@ -62,22 +63,40 @@ public class PessoaService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public PessoaDTO findById(Long id) {
-        var pessoa = pessoaRepository.findById(id).orElseThrow(
-                () -> new ServiceNotFoundedException("Pessoa não encontrada")
-        );
-        return pessoa.ToPessoaDTO();
-    }
+//    @Transactional(readOnly = true)
+//    public PessoaDTO findById(Long id) {
+//        var pessoa = pessoaRepository.findById(id).orElseThrow(
+//                () -> new ServiceNotFoundedException("Pessoa não encontrada")
+//        );
+//        return pessoa.ToPessoaDTO();
+//    }
 
     @Transactional(readOnly = true)
-    public List<PessoaDTO> findByParam(String nomeNome, String nomeParentesco, String nomeSexo) {
-        try{
-            var pessoa = pessoaRepository.findByNomeOrParentescoOrSexo(nomeNome, nomeParentesco, nomeSexo);
-            return pessoa.stream().map(PessoaDTO::new).collect(Collectors.toList());
-        } catch (EntityNotFoundException e) {
-            throw new ServiceNotFoundedException("Pessoa não encontrada");
+    public ResponseEntity<PessoaDTO> findById(Long id) {
+        var pessoa = pessoaRepository.findById(id);
+        if(pessoa.isPresent()) {
+            return ResponseEntity.ok(pessoa.get().ToPessoaDTO());
         }
+        return ResponseEntity.notFound().build();
+    }
+
+//    @Transactional(readOnly = true)
+//    public List<PessoaDTO> findByParam(String nomeNome, String nomeParentesco, String nomeSexo) {
+//        try{
+//            var pessoa = pessoaRepository.findByNomeOrParentescoOrSexo(nomeNome, nomeParentesco, nomeSexo);
+//            return pessoa.stream().map(PessoaDTO::new).collect(Collectors.toList());
+//        } catch (EntityNotFoundException e) {
+//            throw new ServiceNotFoundedException("Pessoa não encontrada");
+//        }
+//    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PessoaDTO>> findByParam(String nomeNome, String nomeParentesco, String nomeSexo) {
+        var pessoa = pessoaRepository.findByNomeOrParentescoOrSexo(nomeNome, nomeParentesco, nomeSexo);
+        if(!pessoa.isEmpty()) {
+            return ResponseEntity.ok(pessoa.stream().map(PessoaDTO::new).collect(Collectors.toList()));
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

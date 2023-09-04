@@ -57,20 +57,34 @@ public class EnderecoController {
         return ResponseEntity.noContent().build();
     }
 
+//    @GetMapping("/{id}")
+//    public ResponseEntity<EnderecoEletrodomesticoDTO> findById(@PathVariable Long id) {
+//        var endereco = enderecoService.findById(id);
+//        return ResponseEntity.ok(endereco);
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EnderecoEletrodomesticoDTO> findById(@PathVariable Long id) {
-        var endereco = enderecoService.findById(id);
-        return ResponseEntity.ok(endereco);
+        return enderecoService.findById(id);
     }
+
+//    @GetMapping("/Pesquisar")
+//    public ResponseEntity<List<EnderecoEletrodomesticoDTO>> findByParam(
+//            @RequestParam String rua,
+//            @RequestParam String bairro,
+//            @RequestParam String municipio
+//    ) {
+//        var endereco = enderecoService.findByParam(rua, bairro, municipio);
+//        return ResponseEntity.ok(endereco);
+//    }
 
     @GetMapping("/Pesquisar")
     public ResponseEntity<List<EnderecoEletrodomesticoDTO>> findByParam(
-            @RequestParam String rua,
-            @RequestParam String bairro,
-            @RequestParam String municipio
+            @RequestParam(required = false) String rua,
+            @RequestParam(required = false) String bairro,
+            @RequestParam(required = false) String municipio
     ) {
-        var endereco = enderecoService.findByParam(rua, bairro, municipio);
-        return ResponseEntity.ok(endereco);
+        return enderecoService.findByParam(rua, bairro, municipio);
     }
 
 }

@@ -46,10 +46,15 @@ public class UsuarioController {
 
     }
 
+//    @GetMapping("/{id}")
+//    public ResponseEntity<UsuarioPessoaDTO> findById(@PathVariable Long id) {
+//        var usuario = usuarioService.findById(id);
+//        return ResponseEntity.ok(usuario);
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioPessoaDTO> findById(@PathVariable Long id) {
-        var usuario = usuarioService.findById(id);
-        return ResponseEntity.ok(usuario);
+        return usuarioService.findById(id);
     }
 
     @PutMapping("/{id}")

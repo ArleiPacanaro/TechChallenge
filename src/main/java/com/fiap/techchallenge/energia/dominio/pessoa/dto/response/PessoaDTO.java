@@ -1,7 +1,6 @@
 package com.fiap.techchallenge.energia.dominio.pessoa.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.techchallenge.energia.dominio.pessoa.entitie.Pessoa;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -62,7 +61,6 @@ public class PessoaDTO {
     private Long idusuario;
 
     public PessoaDTO(Pessoa pessoa) {
-
                 this.id = pessoa.getId();
                 this.cpf = pessoa.getCpf();
                 this.nome = pessoa.getNome();
@@ -74,4 +72,5 @@ public class PessoaDTO {
                 this.parentesco = pessoa.getParentesco();
                 this.idusuario = pessoa.getIdusuario();
     }
+
 }
