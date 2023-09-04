@@ -19,53 +19,62 @@
 <p> Após construimos na 1º Fase do projeto 3 APIs apenas com ações do método\verbo POST, sendo que 2 estavam persistindo em  banco de memória H2 e uma em collection do tipo SET, nesta 2º Fase estamos agora persistindo em um banco de dados relacional confiável, criamos em todas as APIs os demais métodos que compõe um CRUD (GET,POST,UPDATE,DELETE), relacionamentos entre as entidades utlizando a framework do JPA e o ambiente de execução com Docker, para estes temas adicionais acrescentamos em nosso README os capitulos\tópicos abaixo com os detalhes do que utilizamos, motivações e dificuldades :</p>
 
 <p> * Banco de Dados</p>
-<p> * JPA</p>
+<p> * JPA\Hibernate</p>
 <p> * Docker</p>
 
 
 
 <h2><strong>Funcionalidades e Demonstração da Aplicação - 2º Item do Entregável</strong></h2>
 <p></p>
-<p>Baixar via GIT : git clone https://github.com/rmstrunkis/techchallenge.git</p> 
-<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: mvn compile.</p> 
-<p>Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar:  <b>docker build -t tech:2.0 . </b> e depois : docker compose up -d</p> 
+<p> 1) Baixar via GIT : git clone https://github.com/rmstrunkis/techchallenge.git</p> 
+<p></p>
+<p> 2) Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: 
+<p><b> 2.1) docker build -t tech:2.0 . ** o detlahe do ponto muito importante, bem como mante o nome tech:2.0 para uso em nosso compose .yml</b> </p> 
+<p> Poderiamos através de uma conta docker hub ja deixar a imagem pronta, porém por não ser requisito e ainda não termos esta conta cadastrada, iremos criar uma imagem localmente.</p>
+<p><b> 2.2) docker compose up -d </b> </p> 
+<p>Esta commando irá executar o conteiner da imagem que criamos no item 1 da nossa aplicação , mas antes irá executar a criação do banco da nossa aplicação chame-se <b>>dbEnergia</b em Postgres, com usuário = user e senha = 123, isto é importante caso for analisar o resultado dos processamentos no banco de dados.
 <p>Premisa: Docker instalado na máquina.</p> 
 <p></p>
+<p>Após os passos acima, poderá acessar o nosso swagger para testes e com nossa documentação.</p>
+<p>URL principal do nosso swagger: http://localhost:8080/swagger-ui/#/ </p>
 
 <h3><strong>API Usuários</strong></h3>
 <p></p>
-<p>Funcionalidades: CRUD de Usuários</p>
+<p>O nosso projeto o ideal é que siga a sequencia abaixo das URLs para realizar o ciclo completo, pois:</p>
+<p> 1) Devemos cadastrar os usuários</p>
+<p> 2) As pessoas referenciando o ID do usuário que possui aquela pessoa</p>
+<p> 3) Os endereços referenciando o ID do usuário que possui aqueles Endereços</p>
+<p> 4) Os Eletrodomésticos referenciando o ID do Endereços que possui aqueles Eletros</p>
+<p> 5) O cálculo do consumo do Eletrodoméstico, informando o tempo em minutos de uso do equipamento</p>
+
+<p>Funcionalidades: CRUD de Usuários com os GETs relacionando as pessoas e endereços que o usuário possue.</p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
 <p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
-<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/usuario-controller/ </p>
-<p>URL Local:http://localhost:8080/usuarios</p>
+<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/usuario-controller </p>
 <p></p>
 
 <h3><strong>API Pessoas</strong></h3>
 <p></p>
-<p>Funcionalidades: CRUD de Pessoas relacionadas ao usuário</p>
+<p>Funcionalidades: CRUD de Pessoas relacionadas ao usuário e filtros: de Nome ou Parentesco ou Sexo</p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
 <p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
-<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/pessoa-controller/</p>
-<p>URL Local:http://localhost:8080/pessoas</p>
+<p>Swagger da aplicação local: http://localhost:8080/swagger-ui/#/pessoa-controller</p>
 <p></p>
 
 <h3><strong>API Endereços</strong></h3>
 <p></p>
-<p>Funcionalidades: CRUD de Endereços relacionados aos usuários</p>
+<p>Funcionalidades: CRUD de Endereços relacionados aos usuários, filtros de : Bairro ou Municipio ou Rua, além de no GET informar qual  o usuário e o dono do endreço a lista de eletrodomésticos.</p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
 <p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
-<p>URL Local:http://localhost:8080/enderecos</p>
 <p>Swagger da aplicação: http://localhost:8080/swagger-ui/#/endereco-controller/</p>
 
 <p></p>
 
 <h3>API Eletrodomesticos</h3>
 <p></p>
-<p>Funcionalidade : CRUD de Eletrodomesticos relacionados aos endereços</p>
+<p>Funcionalidade : CRUD de Eletrodomesticos relacionados aos endereços, cálculo do consumo do eletrodoméstico e o relacionamento a qual Endereço o Eletrodoméstico pertence. </p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
 <p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
-<p>URL Local:http://localhost:8080/eletrodomestico</p>
 <p>Swagger da aplicação: http://localhost:8080/swagger-ui/#/eletrodomestico-controller/</p>]
 
 <p></p>
@@ -74,7 +83,7 @@
 <p></p>
 <p>Liguagem: Java versão 11</p>
 
-<p>Arquitetura: MVC - Model View Controller</p>
+<p>Arquitetura: MVC - Model View Controller na fase1 , na fase 2 partimos para um modelo hexagonal, pois consideramos mais interessante diante dos recioamenttos e para o futuro do projeto nas demais fases</p>
 <p>Frameworks e Bibliotecas: Spring Boot versão: 2.7.12 , LOMBOK versão default para a versão do Spring, Bean Validation versão default para a versão do Spring, JPA</p>
 <p>Ferramentas Colaborativas: Docker,Postman,GIT,Maven e Swagger</p>
 <p>Banco de Dados: POSTGRES </p>
@@ -276,9 +285,24 @@
 <p></p>
 <h3><strong>Separação de Camadas, Padrões de Projeto, Principais: Anotações e Classes </strong></h3>
 <p></p>
-<p>Em nosso projeto, pensando na separação de responsabilidades, melhores práticas e na arquitetura MVC, criamos os pacotes\pastas (algumas padrões do Maven para o arquétipo escolhido) abaixo em negrito: </p> 
+<p>Em nosso projeto, pensando na separação de responsabilidades, melhores práticas e na arquitetura MVC e agora na Hexagonal (a partir da 2 fase), criamos os pacotes\pastas (algumas padrões do Maven para o arquétipo escolhido) abaixo em negrito: </p> 
 
-<p><b>Pasta: Controller:</b>  Contêm as classes PessoaController,EnderecoController e EletrodomesticoController que serão as responsáveis por atender as requisições da camada View e direcionar as ações para as classes de Negócio, nesta camada que é o C - Controller da arquitetura MVC, estamos fazendo a injeção de dependência da nossa classe de Serviço que esta no pacote Service, na classe da Controller temos a exposição dos serviços disponiveis no servidor com base no verbos HTTP, na fase 1 deste projeto estamos apenas expondo serviço com chamada via metódo POST, um pouco mais abaixo expomos novas necessidades da utilização de outras anotações e classes com a evolução das fases.</p> 
+<p><b>Pasta: Config:</b>Criamos esta package como boa prática para termos as classes de infra-estrutura da nossa aplicação bem identificadas, nesta fase do projeto, estamos utilizando duas:</p>
+<p>ValidatorBean:   Esta classe possui apenas um método com a anotação @Bean que retorna uma factory (padrão de software) de Bean Validations para que possamos, validar os dados das requisições.</p>
+<p>SpringFoxConfig: Esta classe possui apenas um método com a anotação @Bean retorna uma factory (padrão de software) de Docket para que possamos documentar e executar nossa API com a ferramenta Swagger</p>
+<p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
+<p>Anotação @Configuration: anotação no nível de classe que indica que uma classe declara um ou mais @Bean-métodos e pode ser processada pelo contêiner Spring para gerar definições de bean e solicitações de serviços para esses beans em tempo de execução</p>
+<p>Anotação @Bean: Essa anotação é no nível do Método e indica que esse cria e retorna um “bean” que pode ser usado como dependência em outras classes.</p>
+<p>Classe Validation: Classe que possui diversos métodos estáticos, sendo que usamos um deles no projeto para o retorno de Validators que iremos utilizar para a valdiação de nossos objetos do tipo DTO, centralizando assim na entrada dos dados as regras de validações antes do processamento e persistência.</p>
+<p>Sobre o Swagger nesta fase do projeto não iremos detalhar ainda.</p>
+<p></p>
+
+<p><b>Pasta: Exception:</b> Criamos esta package como boa prática para termos as classes de tratamentos de exceções da nossa aplicação mas por não ser o foco desta fase nas aulas, não iremos entrar em maiores detalhes deste tema. 
+<p></p>
+
+<p><b>Pasta Dominio, padrão hexagonal (cada API com uma package com seu nome e dentro de uma delas as demais packages abaixo):</b></p>
+<p></p>
+<p><b>Pasta: Dominio - Controller:</b>  Contêm as classes PessoaController,EnderecoController e EletrodomesticoController que serão as responsáveis por atender as requisições da camada View e direcionar as ações para as classes de Negócio, nesta camada que é o C - Controller da arquitetura MVC, estamos fazendo a injeção de dependência da nossa classe de Serviço que esta no pacote Service, na classe da Controller temos a exposição dos serviços disponiveis no servidor com base no verbos HTTP, na fase 1 deste projeto estamos apenas expondo serviço com chamada via metódo POST, um pouco mais abaixo expomos novas necessidades da utilização de outras anotações e classes com a evolução das fases.</p> 
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p>Anotação @RestController: anotação no nível de classe que indica que  esta é camada de controller do tipo Rest com dados no padrão JSON.</p>
 <p>Anotação @RequestMapping: anotação no nível de classe\ atributo que irá indicar a URL principal da API que no nosso casos teremos: Pessoa, Eletrodomestico e Endereço.</p>
@@ -297,18 +321,7 @@
 <p>Classe PageRequest: Classe que define os atributos para paginação dentro de um Objeto Page</p>
 <p>Classe Page: é uma sublista de uma lista de objetos. Permite obter informações sobre a posição do mesmo na lista inteira que o contém, usamos para termos um interface adequada com o front end</p>
 
- 
-
-<p><b>Pasta: Config:</b>Criamos esta package como boa prática para termos as classes de infra-estrutura da nossa aplicação bem identificadas, nesta fase do projeto, estamos utilizando duas:</p>
-<p>ValidatorBean:   Esta classe possui apenas um método com a anotação @Bean que retorna uma factory (padrão de software) de Bean Validations para que possamos, validar os dados das requisições.</p>
-<p>SpringFoxConfig: Esta classe possui apenas um método com a anotação @Bean retorna uma factory (padrão de software) de Docket para que possamos documentar e executar nossa API com a ferramenta Swagger</p>
-<p></p>
-<p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
-<p>Anotação @Configuration: anotação no nível de classe que indica que uma classe declara um ou mais @Bean-métodos e pode ser processada pelo contêiner Spring para gerar definições de bean e solicitações de serviços para esses beans em tempo de execução</p>
-<p>Anotação @Bean: Essa anotação é no nível do Método e indica que esse cria e retorna um “bean” que pode ser usado como dependência em outras classes.</p>
-<p>Classe Validation: Classe que possui diversos métodos estáticos, sendo que usamos um deles no projeto para o retorno de Validators que iremos utilizar para a valdiação de nossos objetos do tipo DTO, centralizando assim na entrada dos dados as regras de validações antes do processamento e persistência.</p>
-<p>Sobre o Swagger nesta fase do projeto não iremos detalhar ainda.</p>
-<p><b>Pasta: Domain - DTO</b></p> 
+<p><b>Pasta: Dominio - DTO</b></p> 
 <p>Nesta pasta temos as classes que irão representar as Entidades que irão ser utilizadas nas interações entra a camada View e Controller, tendo apenas esta responsabilidade de trafegar os dados (Seguindo o que é conhecido como padrão de software DTO) e aqui podemos falar que aplicamos a 1º especificação do SOLID (Single Responsability Principle (Princípio da Responsabilidade Única); Open/Closed Principle (Princípio do “Aberto para Extensão/Fechado para Implementação); Liskov Substitution Principle (Princípio da Substituição de Liskov)), estas classes são muito similares as classes de entidade do negócio nos atributos, mas aqui podemos tirar alguns atributos que não devem ser expostos por questões de segurança, aplicamos as validações e no nosso caso utilizando as anotações do bean validation</p>
 <p> Para realizar o mapeamento dos atributos das classes DTO e das classes de Dominio que estão na nossa pasta MODEL, podemos utilizar diversas Classes, dentre elas a mais recomendada pela questão de performance e com o JMapper mas em nosso projeto pela simplicidade, criamos uma método na classe de DTO que retorna um objeto da nossa classe de Dominio\Negócio (Padrão de software Creator)</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
@@ -321,8 +334,8 @@
 <p>Anotação @NotNull: anotação no nível de atributo do bean validation que valida se o campo esta nulo, cuidado na utilização em conjunto com a anotação @NotBlank, que irá apresentar uma exceção</p>
 <p></p>
 <p></p>
-<p><b>Pasta: Domain-Entitie</b></p> 
-<p>Nesta pasta temos as classes que irão representar as Classes e Entidades de negócio, dentro da arquitetura MVC estamos falando que faz parte do  M-Model, que dentro dos sistemas corporativos deveria ser a camada mais importante e que não deveria ter implementações de classes relacionadas a infra-estrutura, seguindo os conceitos inciais que estamos apredendo de DDD (Domain Divre Design) devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como Pessoa, PessoaSexo, Endereco e etc</p>
+<p><b>Pasta: Dominio -Entitie</b></p> 
+<p>Nesta pasta temos as classes que irão representar as Classes e Entidades de negócio, dentro da arquitetura MVC estamos falando que faz parte do  M-Model, que dentro dos sistemas corporativos deveria ser a camada mais importante e que não deveria ter implementações de classes relacionadas a infra-estrutura, seguindo os conceitos inciais que estamos apredendo de DDD (Domain Drive Design) devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como Pessoa, PessoaSexo, Endereco e etc</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p>Anotação @Getter: Iremos falar sobre o Lombok que é a blblioteca que nos fornece esta anotação, em um capítulo mais abaixo, mas a priori esta anotação implementa os métodos Getters (Encapsulamento OO) , podemos usar esta anotação na classe ou nos atributos.</p>
 <p>Anotação @AllArgsConstructor: Iremos falar sobre o Lombok que é a blblioteca que nos fornece esta anotação, em um capítulo mais abaixo, mas a priori esta anotação implementa um construtor com todos os atributos da classe, podemos usar esta anotação no nível da classe.</p>
@@ -345,16 +358,16 @@
 
 
 <p></p>
-<p><b>Pasta: Respository</b></p> 
-<p>Nesta pasta temos as classes que irão representar as Classes de persistências e relacionamento com o banco de dados, dentro da arquitetura MVC estamos indicando que pertence ao M-Model também,  seguindo os conceitos de DDD  devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como PessoaRepository, Métodos : Salvar, Buscar e etc. Na fase 1 do projeto ainda não usamos JPA e mesmo banco de dados não estava obrigatório, mas em algumas APIS deste projeto já estavmos persistindo em banco H2 e em outras seguimos a persistência em Collections do tipo Set. Porém após a fase 1 começamos a persistir os dados em um banco de dados confiável e um pouco mais abaixo, estamos expondo a utilização de uma nova classe.</p>
+<p><b>Pasta: Dominio - Respository</b></p> 
+<p>Nesta pasta temos as classes que irão representar as Classes de persistências e relacionamento com o banco de dados,  seguindo os conceitos de DDD  devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como PessoaRepository, Métodos : Salvar, Buscar e etc. Na fase 1 do projeto ainda não usamos JPA e mesmo banco de dados não estava obrigatório, mas em algumas APIS deste projeto já estavmos persistindo em banco H2 e em outras seguimos a persistência em Collections do tipo Set. Porém após a fase 1 começamos a persistir os dados em um banco de dados confiável e um pouco mais abaixo, estamos expondo a utilização de uma nova classe.</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p></p>
 <p>Anotação @Repository: Indica que uma classe\interface anotada é um Repositório, originalmente definido por DDD como  um mecanismo para encapsular armazenamento, recuperação e comportamento de pesquisa que representa uma coleção de objetos, com base nesta anotação e seguindo o objetivo de evitarmos acomplamento pela injeção de dependências e inversão de controle, injetamos estas classes nas classes da pasta Service.</p>
 <p>JPARespository: módulo  que contém uma camada de Repositórios (JpaRepository) que dá suporte à criação de repositórios estendendo interfaces do Spring Data. A infraestrutura é compartilhada pelos bancos e o JPA Provider que implementa o JPA, aonde ja temos implementados diversos metodos como por exemplo de Crud que recebem um Generic da Entidade que queremos persistir.</p>
-<p>JpaSpecificationExecutor:  isso significa que você criamos um repositório que permite executar Specifications baseadas na API de critérios do JPA. Uma Specification é uma interface que define uma cláusula where para uma consulta. Você pode usar o JpaSpecificationExecutor para encontrar, contar ou excluir entidades que correspondam a uma Specification. Você também pode usar ordenação e paginação com o JpaSpecificationExecutor.JpaSpecificationExecutor e o JpaRepository, eles não são iguais. O Jpa é uma especificação para persistência de dados usando o Java. O JpaSpecificationExecutor é uma interface do Spring Data JPA que permite executar consultas dinâmicas usando a API de critérios do JPA. Você pode usar o JpaSpecificationExecutor para encontrar, contar ou excluir entidades que correspondam a uma Specification, que é uma interface que define uma cláusula where para uma consulta.E o JpaSpecificationExecutor, isso não é uma biblioteca e não é uma biblioteca.</p>
+<p>Um aspecto importante é que para nossos Filtros usamos ja metodos implementados pela framework do Hibernate seguindo a especificação JPA, existem dezenas de metodos que fazerm as combinações dos atributos das nossas entidades, por exeplo em Pessoa para a listagem criamos a assinatura findByNomeOrParentescoOrSexo que facilitou muito nosso desenvolvimento dos filtros.</p>
 <p></p>
 <p></p>
-<p><b>Pasta: Service:</b> Pasta com as classes de serviço que contêm as regras de negócios comuns e são responsáveis em delegar para as classes de Negócios as requisições da Controller, em nosso projeto ela é injetada na Controller e recebe a injeção das classes de negócio.</p> 
+<p><b>Pasta: Dominio - Service:</b> Pasta com as classes de serviço que contêm as regras de negócios comuns e são responsáveis em delegar para as classes de Negócios as requisições da Controller, em nosso projeto ela é injetada na Controller e recebe a injeção das classes de negócio.</p> 
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p></p>
 <p>Anotação @Service: Indica que uma classe anotada é um Serviço</p>
@@ -430,7 +443,7 @@ está somente no futuro ou no futuro ou no presente.</p>
  --- São comanddos DDL e em nosso caso, como a criação das tabelas ocorrerá de forma automática através de um docker-compose (tema - 
  --- que temos um tópico abaixo com mais detalhes), realizamos uma verificação se a tabela existe e apenas criamos senão existirem - 
  --- no banco de dados	, o tipo SERIAL indica que será autoincrementado valor do campo do tipo INT, a palavra PRIMARY KEY indica a 
- --- coluna que será a chave primária e pode haver composição, NOT NULL siginifa que o campo não aceitará valores NULOS, ocasionando 
+ --- coluna que será a chave primária e pode haver composição, NOT NULL siginifica que o campo não aceitará valores NULOS, ocasionando 
  --- uma exceção 
 	
  CREATE TABLE IF NOT exists tb_usuario(
@@ -438,9 +451,11 @@ está somente no futuro ou no futuro ou no presente.</p>
 	username VARCHAR(255) NOT NULL,
 	senha VARCHAR(255) NOT NULL);
 
---- Comentário: Tabela que irá representar as pessoas do sistema e que possui uma relação de N para 1 com a tabela de usuários, por ---- isso da informação das palavras FOREIGN KEY  e REFERENCES quem indicam qual a tabela que ela irá relacionar e uma dependência
+--- Comentário: Tabela que irá representar as pessoas do sistema e que possui uma relação de N para 1 com a tabela de usuários, por  isso da informação das palavras FOREIGN KEY  e 
+--- REFERENCES quem indicam qual a tabela que ela irá relacionar e uma dependência
 --- mesmo, já que poderemos ter apenas pessoas com usuários que já existam no banco de dados.
---- Também temos a informação que caso o registro na tabela Pai seja exlcuido o mesmo deverá ocorrer na tabela filha com o comando  ----- CASCADE ON DELETE, sem a necessidade da aplicação gestionar, isto é um ponto muito importate de sempre avaliarmos em qualquer ------ sistema que formos trabalhar.
+--- Também temos a informação que caso o registro na tabela Pai seja exlcuido o mesmo deverá ocorrer na tabela filha com o comando CASCADE ON DELETE, sem a necessidade da aplicação 
+--- gestionar, isto é um ponto muito importate de sempre avaliarmos em qualquer sistema que formos trabalhar.
 
 CREATE table IF NOT exists  tb_pessoa(
         id 		SERIAL       PRIMARY KEY,
@@ -466,28 +481,19 @@ CREATE TABLE IF NOT exists  tb_endereco
    	bairro 	     VARCHAR(255)  NOT NULL,
    	cep 	     VARCHAR(30)   NOT NULL,
    	complemento   VARCHAR(30),
-        rua 	     VARCHAR(255)  NOT NULL
+        rua 	     VARCHAR(255)  NOT NULL,
+	idUsuario         BIGINT       NOT null,
+        FOREIGN KEY (idUsuario) REFERENCES tb_usuario (id) ON DELETE CASCADE
 );
 
 
-
--- Comentário: Tabela que irá representar o relacionamento e muitos para muitos entre e usuários, na aplicação usamos a anotação -- --- @ManyToMany, neste caso o ideal é termos tabela que será criada de forma atuomatica no POST de endereço para auxiliar nesta -- ----- relação, caso ou Endereço ou Pessoa for excluido , a exclusão nesta tabela também será automática, conforme ja mencionamos sobre --- o DELETE ON CASCADE
-
-CREATE TABLE IF NOT exists  tb_pessoa_endereco
-(
-       idPessoa     SERIAL NOT NULL,
-	idEndereco   SERIAL NOT NULL,
-	PRIMARY KEY (idPessoa, idEndereco),
-	FOREIGN KEY (idPessoa) REFERENCES tb_pessoa (id) ON DELETE CASCADE,
-	FOREIGN KEY (idEndereco) REFERENCES tb_endereco (id) ON DELETE CASCADE
- 
-);
 
 -- Comentário: Tabela que irá representar os eletrodomésticos de uma casa sendo N para 1 com o endereço (@ManyToOne) e que será ------- excluida de forma automática, caso o endereço seja excluído
 CREATE TABLE IF NOT exists  tb_eletrodomestico
 (
       id 		 	         SERIAL       PRIMARY KEY,
         nome	 	         VARCHAR(255) NOT NULL,
+	 modelo	 	         VARCHAR(255) NOT NULL,
    	potencia 	 		 INTEGER ,
    	serialNumber 	     VARCHAR(30)  NOT NULL,
    	idEndereco   		 SERIAL 	  NOT null unique ,
@@ -558,9 +564,9 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 </pre>
 
 <p></p>  
-<p>Estamos fazendo o download da versão 11 do Java, adiconando o arquivo de extensão .JAR de nossa aplicação  , definidno a nossa área de trabalho, a porta que nossa aplicação irá utilizar e o comando quando for executada a imagem e que irá startar a nossa aplicação.</p>  
+<p>Estamos fazendo o download da versão 11 do Java, adiconando o arquivo de extensão .JAR de nossa aplicação  , definindo a nossa área de trabalho, a porta que nossa aplicação irá utilizar e o comando quando for executada a imagem e que irá startar a nossa aplicação.</p>  
 <p></p> 
-<p> Abaixo esta nosso arquivo docker-compose que irá executar nossa projeto, mas antes criando uma imagem do banco de dados:</p> 
+<p> Abaixo esta nosso arquivo docker-compose que irá executar nosso projeto, mas antes criando uma imagem do banco de dados:</p> 
 <pre>
 version: '3'
 
@@ -593,7 +599,7 @@ services:
 <p>Criamos um serviço que executará a imagem de um banco POSTGRES, criando também através do nossos script no tópico de banco as tabelas caso não existam e na sequência executando nossa imagem da aplicação que esta dependente do Banco de dados.</p> 
 <p></p> 
 <h2><strong>Pessoas Desenvolvedoras do Projeto</strong></h2>
-<p>Grupo 38</p>
+<p> RM350113 , RM349894 , RM350459</p>
 <p></p>
 
 <h2><strong>Conclusão</strong></h2>
