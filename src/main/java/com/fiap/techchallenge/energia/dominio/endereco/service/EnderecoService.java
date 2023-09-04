@@ -5,6 +5,8 @@ import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoEletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
 import com.fiap.techchallenge.energia.dominio.endereco.repository.IEnderecoRepository;
+import com.fiap.techchallenge.energia.exception.service.DatabaseException;
+import com.fiap.techchallenge.energia.exception.service.ServiceNotFoundedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -48,7 +50,7 @@ public class EnderecoService {
             var enderecoSaved = enderecoRepository.save(enderecoEntity);
             return enderecoSaved.ToEnderecoDTO();
         }  catch (EntityNotFoundException e) {
-            throw new RuntimeException("Endereço não encontrado, id: " + id);
+            throw new ServiceNotFoundedException("Endereço não encontrado, id: " + id);
         }
     }
 
@@ -57,22 +59,26 @@ public class EnderecoService {
         try {
             enderecoRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Violação de integridade dos dados");
+            throw new DatabaseException("Violação de integridade dos dados");
         }
     }
 
     @Transactional(readOnly = true)
     public EnderecoEletrodomesticoDTO findById(Long id) {
         var endereco = enderecoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Endereço não encontrado")
+                () -> new ServiceNotFoundedException("Endereço não encontrado")
         );
         return endereco.ToEnderecoEletrodomesticoDTO();
     }
 
     @Transactional(readOnly = true)
     public List<EnderecoEletrodomesticoDTO> findByParam(String nomeRua, String nomeBairro, String nomeMunicipio) {
-        var endereco = enderecoRepository.findByRuaOrBairroOrMunicipio(nomeRua, nomeBairro, nomeMunicipio);
-        return endereco.stream().map(EnderecoEletrodomesticoDTO::new).collect(Collectors.toList());
+        try{
+            var endereco = enderecoRepository.findByRuaOrBairroOrMunicipio(nomeRua, nomeBairro, nomeMunicipio);
+            return endereco.stream().map(EnderecoEletrodomesticoDTO::new).collect(Collectors.toList());
+        } catch (EntityNotFoundException e) {
+            throw new ServiceNotFoundedException("Endereco não encontrada");
+        }
     }
 
 }

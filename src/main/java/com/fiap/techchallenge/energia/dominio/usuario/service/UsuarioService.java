@@ -5,6 +5,8 @@ import com.fiap.techchallenge.energia.dominio.usuario.dto.response.UsuarioDTO;
 import com.fiap.techchallenge.energia.dominio.usuario.dto.response.UsuarioPessoaDTO;
 import com.fiap.techchallenge.energia.dominio.usuario.entitie.Usuario;
 import com.fiap.techchallenge.energia.dominio.usuario.repository.IUsuarioRepository;
+import com.fiap.techchallenge.energia.exception.service.DatabaseException;
+import com.fiap.techchallenge.energia.exception.service.ServiceNotFoundedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,6 +19,7 @@ import javax.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
+
     @Autowired
      IUsuarioRepository usuarioRepository;
 
@@ -27,14 +30,11 @@ public class UsuarioService {
         return enderecoSaved.ToUsuarioDTO();
     }
 
-
     @Transactional(readOnly = true)
     public Page<UsuarioPessoaDTO> findAll(PageRequest pageRequest) {
         var usuarios = usuarioRepository.findAll(pageRequest);
-       return  usuarios.map(Usuario::ToUsuarioPessoaDTO);
-
+        return  usuarios.map(Usuario::ToUsuarioPessoaDTO);
     }
-
 
     @Transactional
     public UsuarioDTO update(Long id, UsuarioRequestDTO dto) {
@@ -46,7 +46,7 @@ public class UsuarioService {
             return enderecoSaved.ToUsuarioDTO();
 
         }  catch (EntityNotFoundException e) {
-            throw new RuntimeException("Usuario não encontrado, id: " + id);
+            throw new ServiceNotFoundedException("Usuario não encontrado, id: " + id);
         }
     }
 
@@ -55,17 +55,15 @@ public class UsuarioService {
         try {
             usuarioRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Violação de integridade dos dados");
+            throw new DatabaseException("Violação de integridade dos dados");
         }
     }
-
 
     @Transactional(readOnly = true)
     public UsuarioPessoaDTO findById(Long id) {
         var usuario = usuarioRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Endereço não encontrado")
+                () -> new ServiceNotFoundedException("Usuario não encontrado")
         );
-
         return usuario.ToUsuarioPessoaDTO();
     }
 

@@ -4,6 +4,8 @@ import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.request.Eletro
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.response.EletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.entitie.Eletrodomestico;
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.repository.EletrodomesticoRepository;
+import com.fiap.techchallenge.energia.exception.service.DatabaseException;
+import com.fiap.techchallenge.energia.exception.service.ServiceNotFoundedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -17,18 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class EletrodomesticoService {
 
     @Autowired
     EletrodomesticoRepository eletrodomesticoRepository;
+
     @Transactional
     public EletrodomesticoDTO save(EletrodomesticoRequestDTO eletrodomesticoDTO) {
         var eletrodomesticoEntity = eletrodomesticoDTO.toEntity();
         var eletrodomesticoSaved = eletrodomesticoRepository.save(eletrodomesticoEntity);
         return eletrodomesticoSaved.ToEletrodomesticoDTO();
     }
+
     @Transactional
     public Page<EletrodomesticoDTO> findAll(PageRequest pageRequest) {
         var eletrodomesticos = eletrodomesticoRepository.findAll(pageRequest);
@@ -38,14 +41,19 @@ public class EletrodomesticoService {
     @Transactional(readOnly = true)
     public EletrodomesticoDTO findById(Long id) {
         var eletrodomesticos = eletrodomesticoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Eletrodomestico não encontrado")
+                () -> new ServiceNotFoundedException("Eletrodomestico não encontrado")
         );
         return eletrodomesticos.ToEletrodomesticoDTO();
     }
+
     @Transactional(readOnly = true)
     public List<EletrodomesticoDTO> findByParam(String nome, String modelo, Integer potencia) {
-        var eletrodomestico = eletrodomesticoRepository.findByNomeOrModeloOrPotencia(nome, modelo, potencia);
-        return eletrodomestico.stream().map(EletrodomesticoDTO::new).collect(Collectors.toList());
+        try{
+            var eletrodomestico = eletrodomesticoRepository.findByNomeOrModeloOrPotencia(nome, modelo, potencia);
+            return eletrodomestico.stream().map(EletrodomesticoDTO::new).collect(Collectors.toList());
+        } catch (EntityNotFoundException e) {
+            throw new ServiceNotFoundedException("Eletrodomestico não encontrada");
+        }
     }
 
     @Transactional
@@ -57,7 +65,7 @@ public class EletrodomesticoService {
             var eletrodomesticoSaved = eletrodomesticoRepository.save(eletrodomesticoEntity);
             return eletrodomesticoSaved.ToEletrodomesticoDTO();
         } catch (EntityNotFoundException e) {
-            throw new RuntimeException("Endereço não encontrado, id: " + id);
+            throw new ServiceNotFoundedException("Eletrodomestico não encontrado, id: " + id);
         }
     }
 
@@ -66,10 +74,9 @@ public class EletrodomesticoService {
         try {
             eletrodomesticoRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Violação de integridade dos dados");
+            throw new DatabaseException("Violação de integridade dos dados");
         }
     }
-
 
     @Transactional
     public ResponseEntity retornarConsumo(Long id, Long minutos) {
@@ -80,9 +87,10 @@ public class EletrodomesticoService {
             if (!eletrodomesticoEncontrado.isEmpty()) {
                 Double potencia = Double.valueOf(eletrodomesticoEncontrado.get().getPotencia());
                 Double consumo = (potencia / 1000) * (minutos / 60);
-                return ResponseEntity.ok().body("O eletrodomestico " + eletrodomesticoEncontrado.get().getNome() + " consumiu " + consumo + "kwh");
+                return ResponseEntity.ok().body("O eletrodomestico " + eletrodomesticoEncontrado.get().getNome() + " consumiu " + consumo + " kwh");
             }
         }
         return ResponseEntity.badRequest().build();
     }
+
 }
