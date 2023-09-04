@@ -601,7 +601,7 @@ services:
 <p>Criamos um serviço que executará a imagem de um banco POSTGRES, criando também através do nossos script no tópico de banco as tabelas caso não existam e na sequência executando nossa imagem da aplicação que esta dependente do Banco de dados.</p> 
 <p></p> 
 <h2><strong>Pessoas Desenvolvedoras do Projeto</strong></h2>
-<p> RM350113 , RM349894 , RM350459</p>
+<p> Grupo 39 : RM350113 , RM349894 , RM350459 e 350127</p>
 <p></p>
 
 <h2><strong>Conclusão</strong></h2>
