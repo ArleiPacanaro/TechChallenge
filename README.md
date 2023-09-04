@@ -33,7 +33,7 @@
 <p> Poderiamos através de uma conta docker hub ja deixar a imagem pronta, porém por não ser requisito e ainda não termos esta conta cadastrada, iremos criar uma imagem localmente.</p>
 <p><b> 2.2)  ir até a pasta: TechChallenge e executar o comando: docker compose up -d </b> </p> 
 <p>Este commando irá executar o conteiner da imagem que criamos no item 1 da nossa aplicação , mas antes irá executar a criação do banco da nossa aplicação que chame-se <b>dbEnergia</b>  em Postgres, com usuário = user e senha = 123456, isto é importante caso for analisar o resultado dos processamentos no banco de dados.</p>
-<p> ** As vezes se torna necessário executar 2 o compose, colocamos a dependencia para subur a a aplicação após o banco, mas as vezes acabam indo em conjunto e aplicação fica pendente.</p>
+<p> ** As vezes se torna necessário executar 2 o compose, colocamos a dependência para subir a a aplicação após o banco, mas as vezes acabam indo em conjunto e a aplicação fica pendente.</p>
 <p><b>Premissa: Docker instalado na máquina client.</b></p> 
 <p></p>
 <p>Após os passos acima, poderá acessar o nosso swagger para testes e ver nossa documentação.</p>
