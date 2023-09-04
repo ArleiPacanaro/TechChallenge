@@ -508,7 +508,7 @@ CREATE TABLE IF NOT exists  tb_eletrodomestico
 <h3><strong>JPA\Hibernate</strong></h3>
 <p></p>
 
-<p>A Java Persistence API (JPA) é uma especificação que possue 3 implentações de framework que foram desenvolvida com o conceito de POJO (Plain Old Java Object ou Velho e Simples Objeto Java) para persistir os objetos Java. Em nosso caso usamos a implementação da Hibernate por ser a mais difundida.</p>
+<p>A Java Persistence API (JPA) é uma especificação que possue 3 implentações de framework que foram desenvolvidas com o conceito de POJO (Plain Old Java Object ou Velho e Simples Objeto Java) para persistir os objetos Java. Em nosso caso usamos a implementação da Hibernate por ser a mais difundida e default no mercado.</p>
 <p></p>
 <p>Existem diversas anotações e propriedades no JPA, em nosso projeto com as necessidades que foram aparecendo, tivemos que usar as anotações\classes abaixo:</p>
 <p></p>
