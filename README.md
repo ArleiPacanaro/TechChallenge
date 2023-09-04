@@ -16,7 +16,7 @@
 <p>Neste momento as APIs irão fornecer todos os métodos de um CRUD, Relacionamentos entre si, Filtros diversos de pesquisas sobre os dados de Endereços, Pessoas e Eletrodomésticos.</p>
 
 
-<p> Após construimos na 1º Fase do projeto 3 APIs apenas com ações do método\verbo POST, sendo que 2 estavam persistindo em  banco de memória H2 e uma em collection do tipo SET, nesta 2º Fase estamos agora persistindo em um banco de dados relacional confiável, criamos em todas as APIs os demais métodos que compõe um CRUD (GET,POST,UPDATE,DELETE), relacionamentos entre as entidades utlizando a framework do JPA e o ambiente de execução com Docker, para estes temas adicionais acrescentamos em nosso README os capitulos\tópicos abaixo com os detalhes do que utilizamos, motivações e dificuldades :</p>
+<p> Após construimos na 1º Fase do projeto 3 APIs apenas com ações do método\verbo POST, sendo que 2 estavam persistindo em  banco de memória H2 e uma em collection do tipo SET, nesta 2º Fase estamos agora persistindo em um banco de dados relacional confiável, criamos em todas as APIs os demais métodos que compõe um CRUD (GET,POST,UPDATE,DELETE), relacionamentos entre as entidades utlizando as framework de implemnetações da especificação JPA e o ambiente de execução com Docker, para estes temas adicionais acrescentamos em nosso README os capitulos\tópicos abaixo com os detalhes do que utilizamos, motivações e dificuldades :</p>
 
 <p> * Banco de Dados</p>
 <p> * JPA\Hibernate</p>
@@ -64,7 +64,7 @@
 
 <h3><strong>API Endereços</strong></h3>
 <p></p>
-<p>Funcionalidades: CRUD de Endereços relacionados aos usuários, filtros de : Bairro ou Municipio ou Rua, além de no GET informar qual  o usuário e o dono do endreço a lista de eletrodomésticos.</p>
+<p>Funcionalidades: CRUD de Endereços relacionados aos usuários, filtros de : Bairro ou Municipio ou Rua, além de no GET recuperar qual é o usuário  dono do endereço e a lista de eletrodomésticos.</p>
 <p>Header da Requisição: ApplicattionType/JSON demais atributos vazios</p>
 <p>Body da Requisição: Formato JSON, exemplo no swagger da aplicação</p>
 <p>Swagger da aplicação: http://localhost:8080/swagger-ui/#/endereco-controller/</p>
@@ -84,7 +84,7 @@
 <p></p>
 <p>Liguagem: Java versão 11</p>
 
-<p>Arquitetura: MVC - Model View Controller na fase1 , na fase 2 partimos para um modelo hexagonal, pois consideramos mais interessante diante dos recioamenttos e para o futuro do projeto nas demais fases</p>
+<p>Arquitetura: MVC - Model View Controller na fase1 , na fase 2 partimos para o inicio de um modelo hexagonal, pois consideramos mais interessante diante dos relacionamentos e para o futuro do projeto nas demais fases</p>
 <p>Frameworks e Bibliotecas: Spring Boot versão: 2.7.12 , LOMBOK versão default para a versão do Spring, Bean Validation versão default para a versão do Spring, JPA</p>
 <p>Ferramentas Colaborativas: Docker,Postman,GIT,Maven e Swagger</p>
 <p>Banco de Dados: POSTGRES </p>
@@ -335,7 +335,7 @@
 <p>Anotação @NotNull: anotação no nível de atributo do bean validation que valida se o campo esta nulo, cuidado na utilização em conjunto com a anotação @NotBlank, que irá apresentar uma exceção</p>
 <p></p>
 <p></p>
-<p><b>Pasta: Dominio -Entitie</b></p> 
+<p><b>Pasta: Dominio - Entitie</b></p> 
 <p>Nesta pasta temos as classes que irão representar as Classes e Entidades de negócio, dentro da arquitetura MVC estamos falando que faz parte do  M-Model, que dentro dos sistemas corporativos deveria ser a camada mais importante e que não deveria ter implementações de classes relacionadas a infra-estrutura, seguindo os conceitos inciais que estamos apredendo de DDD (Domain Drive Design) devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como Pessoa, PessoaSexo, Endereco e etc</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p>Anotação @Getter: Iremos falar sobre o Lombok que é a blblioteca que nos fornece esta anotação, em um capítulo mais abaixo, mas a priori esta anotação implementa os métodos Getters (Encapsulamento OO) , podemos usar esta anotação na classe ou nos atributos.</p>
@@ -359,7 +359,7 @@
 
 
 <p></p>
-<p><b>Pasta: Dominio - Respository</b></p> 
+<p><b>Pasta: Dominio - Repository</b></p> 
 <p>Nesta pasta temos as classes que irão representar as Classes de persistências e relacionamento com o banco de dados,  seguindo os conceitos de DDD  devemos padronizar classes e metódos com nomes que fazem referência ao negócio com linguagem ubíqua, em nosso projeto estamos usando nomes que facilitam o entendimento do que representa como PessoaRepository, Métodos : Salvar, Buscar e etc. Na fase 1 do projeto ainda não usamos JPA e mesmo banco de dados não estava obrigatório, mas em algumas APIS deste projeto já estavmos persistindo em banco H2 e em outras seguimos a persistência em Collections do tipo Set. Porém após a fase 1 começamos a persistir os dados em um banco de dados confiável e um pouco mais abaixo, estamos expondo a utilização de uma nova classe.</p>
 <p>As principais Classes e Anotações que estamos utilizando nesta package são:<p>
 <p></p>
