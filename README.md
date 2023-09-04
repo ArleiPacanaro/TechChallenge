@@ -26,7 +26,7 @@
 
 <h2><strong>Funcionalidades e Demonstração da Aplicação - 2º Item do Entregável</strong></h2>
 <p></p>
-<p> 1) Baixar via GIT : git clone https://github.com/rmstrunkis/techchallenge.git</p> 
+<p> 1) Baixar via GIT : git clone https://github.com/ArleiPacanaro/TechChallenge.git</p> 
 <p></p>
 <p> 2) Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: 
 <p><b> 2.1) docker build -t tech:2.0 . ** o detlahe do ponto muito importante, bem como mante o nome tech:2.0 para uso em nosso compose .yml</b> </p> 
