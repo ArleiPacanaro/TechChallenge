@@ -8,7 +8,7 @@ No final quando consolidar as branchs terá que ter isto Ok gerando o obritarior
 
 2.1) Ir na pasta TARGET a partir da raiz do nosso projeto e executar no meu caso vou pelo terminal no proprio Intelij
 
-2.2) Executar mvn packge -DskipTests = true
+2.2) Executar mvn package -DskipTests = true
 
 2.3) Se tudo correto com nossa aplicação (podemos ter problema na versão Java, fechamos de usar a 11 por ser a ultima LTS)
 
