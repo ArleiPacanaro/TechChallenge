@@ -435,7 +435,8 @@ está somente no futuro ou no futuro ou no presente.</p>
 <p></p>
 <p>Qual seria um SGDB adequado para nosso projeto e optamos pelo POSTGRES que possui todas as caracteristicas mencionadas e pelo site do DockerHub também vimos a versão com menos vulnerabildiades e estável e decidimos pela 9.4</p>
 <p></p>
-<p> Com base nos requisitos apresentados e na modelagem do comportamento dos registros em anexo ([Tabelas_atualizadas.xlsx](https://github.com/rmstrunkis/techchallenge/files/12446765/Tabelas_atualizadas.xlsx)), começamos a estruturar nossas tabelas com os comandos DDL (Data Definition Language) abaixo:</p>
+<p> Com base nos requisitos apresentados e na modelagem do comportamento dos registros em anexo  [Tabelas_atualizadas.xlsx](https://github.com/ArleiPacanaro/TechChallenge/files/12508633/Tabelas_atualizadas.xlsx)
+, começamos a estruturar nossas tabelas com os comandos DDL (Data Definition Language) abaixo:</p>
 <p>Adicionamos comentários no bloco para explicarmos as motivações que nos indicaram a utilização de alguns comandos</p>
 <p></p>
 <pre>
