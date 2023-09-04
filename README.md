@@ -29,18 +29,19 @@
 <p> 1) Baixar via GIT : git clone https://github.com/ArleiPacanaro/TechChallenge.git</p> 
 <p></p>
 <p> 2) Executar em máquina local : na linha de comando ir até a pasta que clonou o projeto e no prompt da linha de comando, executar: 
-<p><b> 2.1) docker build -t tech:2.0 . ** o detlahe do ponto muito importante, bem como mante o nome tech:2.0 para uso em nosso compose .yml</b> </p> 
+<p><b> 2.1) docker build -t tech:2.0 . ** o detaLhe do ponto muito importante, bem como manteR o nome tech:2.0 para uso em nosso compose .yml</b> </p> 
 <p> Poderiamos através de uma conta docker hub ja deixar a imagem pronta, porém por não ser requisito e ainda não termos esta conta cadastrada, iremos criar uma imagem localmente.</p>
 <p><b> 2.2) docker compose up -d </b> </p> 
-<p>Esta commando irá executar o conteiner da imagem que criamos no item 1 da nossa aplicação , mas antes irá executar a criação do banco da nossa aplicação chame-se <b>>dbEnergia</b em Postgres, com usuário = user e senha = 123, isto é importante caso for analisar o resultado dos processamentos no banco de dados.
-<p>Premisa: Docker instalado na máquina.</p> 
+<p>EstE commando irá executar o conteiner da imagem que criamos no item 1 da nossa aplicação , mas antes irá executar a criação do banco da nossa aplicação chame-se <b>dbEnergia</b>  em Postgres, com usuário = user e senha = 123, isto é importante caso for analisar o resultado dos processamentos no banco de dados.</p>
 <p></p>
-<p>Após os passos acima, poderá acessar o nosso swagger para testes e com nossa documentação.</p>
+<p>Premissa: Docker instalado na máquina client.</p> 
+<p></p>
+<p>Após os passos acima, poderá acessar o nosso swagger para testes e ver nossa documentação.</p>
 <p>URL principal do nosso swagger: http://localhost:8080/swagger-ui/#/ </p>
 
 <h3><strong>API Usuários</strong></h3>
 <p></p>
-<p>O nosso projeto o ideal é que siga a sequencia abaixo das URLs para realizar o ciclo completo, pois:</p>
+<p>O nosso projeto o ideal é que siga a sequência abaixo das URLs para realizar o ciclo completo do negócio, pois:</p>
 <p> 1) Devemos cadastrar os usuários</p>
 <p> 2) As pessoas referenciando o ID do usuário que possui aquela pessoa</p>
 <p> 3) Os endereços referenciando o ID do usuário que possui aqueles Endereços</p>
@@ -491,13 +492,13 @@ CREATE TABLE IF NOT exists  tb_endereco
 -- Comentário: Tabela que irá representar os eletrodomésticos de uma casa sendo N para 1 com o endereço (@ManyToOne) e que será ------- excluida de forma automática, caso o endereço seja excluído
 CREATE TABLE IF NOT exists  tb_eletrodomestico
 (
-      id 		 	         SERIAL       PRIMARY KEY,
+        id 		 	         SERIAL       PRIMARY KEY,
         nome	 	         VARCHAR(255) NOT NULL,
-	 modelo	 	         VARCHAR(255) NOT NULL,
+	modelo	 	         VARCHAR(255) NOT NULL,
    	potencia 	 		 INTEGER ,
    	serialNumber 	     VARCHAR(30)  NOT NULL,
    	idEndereco   		 SERIAL 	  NOT null unique ,
-    FOREIGN KEY (idEndereco) REFERENCES tb_endereco (id) ON DELETE CASCADE
+        FOREIGN KEY (idEndereco) REFERENCES tb_endereco (id) ON DELETE CASCADE
 );
 </pre>
 
