@@ -1,7 +1,8 @@
 package com.fiap.techchallenge.energia.dominio.endereco.controller;
 
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoDTO;
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.request.EnderecoRequestDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoEletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity<EnderecoDTO> save(@Valid @RequestBody EnderecoDTO dto) {
+    public ResponseEntity<EnderecoDTO> save(@Valid @RequestBody EnderecoRequestDTO dto) {
         var endereco = enderecoService.save(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((endereco.getId())).toUri();
         return ResponseEntity.created(uri).body(endereco);
@@ -44,7 +45,7 @@ public class EnderecoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<EnderecoDTO> update(
-            @Valid @RequestBody EnderecoDTO enderecoDTO,
+            @Valid @RequestBody EnderecoRequestDTO enderecoDTO,
             @PathVariable Long id) {
         var endereco = enderecoService.update(id, enderecoDTO);
         return ResponseEntity.ok(endereco);

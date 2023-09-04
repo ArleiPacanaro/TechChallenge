@@ -1,6 +1,7 @@
-package com.fiap.techchallenge.energia.dominio.eletrodomestico.dto;
+package com.fiap.techchallenge.energia.dominio.eletrodomestico.dto.response;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.techchallenge.energia.dominio.eletrodomestico.entitie.Eletrodomestico;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EletrodomesticoDTO {
-
     private Long id;
 
     @NotBlank(message = "O nome do eletrodomestico nao pode ser vazio ou nulo.")
@@ -47,27 +47,4 @@ public class EletrodomesticoDTO {
         this.serialNumber = eletrodomestico.getSerialNumber();
         this.idendereco = eletrodomestico.getIdendereco();
     }
-
-    public Eletrodomestico toEntity() {
-        Eletrodomestico eletrodomestico = new Eletrodomestico();
-
-        eletrodomestico.setId(this.id);
-        eletrodomestico.setNome(this.nome);
-        eletrodomestico.setModelo(this.modelo);
-        eletrodomestico.setPotencia(this.potencia);
-        eletrodomestico.setSerialNumber(this.serialNumber);
-        eletrodomestico.setIdendereco(this.idendereco);
-
-        return eletrodomestico;
-    }
-
-    public void ToMapperEntity(Eletrodomestico eletrodomestico) {
-
-        eletrodomestico.setNome(this.nome);
-        eletrodomestico.setModelo(this.modelo);
-        eletrodomestico.setPotencia(this.potencia);
-        eletrodomestico.setSerialNumber(this.serialNumber);
-        eletrodomestico.setIdendereco(this.idendereco);
-    }
-
 }

@@ -1,7 +1,8 @@
 package com.fiap.techchallenge.energia.dominio.endereco.service;
 
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoDTO;
-import com.fiap.techchallenge.energia.dominio.endereco.dto.EnderecoEletrodomesticoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.request.EnderecoRequestDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoDTO;
+import com.fiap.techchallenge.energia.dominio.endereco.dto.response.EnderecoEletrodomesticoDTO;
 import com.fiap.techchallenge.energia.dominio.endereco.entitie.Endereco;
 import com.fiap.techchallenge.energia.dominio.endereco.repository.IEnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class EnderecoService {
     }
 
     @Transactional
-    public EnderecoDTO save(EnderecoDTO enderecoDTO) {
+    public EnderecoDTO save(EnderecoRequestDTO enderecoDTO) {
         var enderecoEntity = enderecoDTO.toEntity();
         var enderecoSaved = enderecoRepository.save(enderecoEntity);
         return enderecoSaved.ToEnderecoDTO();
@@ -39,7 +40,7 @@ public class EnderecoService {
     }
 
     @Transactional
-    public EnderecoDTO update(Long id, EnderecoDTO enderecoDTO) {
+    public EnderecoDTO update(Long id, EnderecoRequestDTO enderecoDTO) {
         try {
             Endereco enderecoEntity = enderecoRepository.getReferenceById(id);
             enderecoDTO.ToMapperEntity(enderecoEntity);

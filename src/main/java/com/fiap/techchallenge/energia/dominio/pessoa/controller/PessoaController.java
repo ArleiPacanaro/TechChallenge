@@ -1,6 +1,7 @@
 package com.fiap.techchallenge.energia.dominio.pessoa.controller;
 
-import com.fiap.techchallenge.energia.dominio.pessoa.dto.PessoaDTO;
+import com.fiap.techchallenge.energia.dominio.pessoa.dto.request.PessoaRequestDTO;
+import com.fiap.techchallenge.energia.dominio.pessoa.dto.response.PessoaDTO;
 import com.fiap.techchallenge.energia.dominio.pessoa.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
-
     private final PessoaService pessoaService;
 
     @Autowired
@@ -37,7 +37,7 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaDTO> save(@Valid @RequestBody PessoaDTO dto) {
+    public ResponseEntity<PessoaDTO> save(@Valid @RequestBody PessoaRequestDTO dto) {
         var pessoa = pessoaService.save(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((pessoa.getId())).toUri();
         return ResponseEntity.created(uri).body(pessoa);
@@ -61,7 +61,7 @@ public class PessoaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PessoaDTO> update(
-            @Valid @RequestBody PessoaDTO dto,
+            @Valid @RequestBody PessoaRequestDTO dto,
             @PathVariable Long id) {
         var pessoa = pessoaService.update(id, dto);
         return ResponseEntity.ok(pessoa);
